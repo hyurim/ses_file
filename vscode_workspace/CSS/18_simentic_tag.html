@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>시멘틱 태그</title>
+    <style>
+      .container {
+        width: 800px;
+        border: 1px solid red;
+        margin: auto;
+      }
+      header {
+        background-color: lightblue;
+        overflow: hidden;
+      }
+      header article {
+        background-color: lightgray;
+        width: 200px;
+        height: 100px;
+      }
+      .logo {
+        float: left;
+      }
+      .navi {
+        float: right;
+      }
+      .box1 {
+        background-color: yellow;
+        height: 300px;
+      }
+      .box2 {
+        background-color: green;
+        overflow: hidden;
+      }
+      .box2 article {
+        width: 33.3%;
+        height: 150px;
+        float: left;
+      }
+      .sub1 {
+        background-color: darkblue;
+      }
+      .sub2 {
+        background-color: lightblue;
+      }
+      .sub3 {
+        background-color: burlywood;
+      }
+      footer {
+        width: 100%;
+        height: 100px;
+        background-color: aqua;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <article class="logo">logo</article>
+        <article class="navi">navi</article>
+      </header>
+      <section class="box1">box1</section>
+      <section class="box2">
+        <article class="sub1">sub1</article>
+        <article class="sub2">sub2</article>
+        <article class="sub3">sub3</article>
+      </section>
+      <footer>footer</footer>
+    </div>
+  </body>
+</html>
