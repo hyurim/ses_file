@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form 태그의 종류</title>
+    <script>
+      function buttonFunc() {
+        alert("zas");
+      }
+    </script>
+  </head>
+  <body>
+    <h1>[ 사용자 입력 폼 만들기 ]</h1>
+    <form action="" method="get">
+      <!-- <fieldset>, <legend> 태그
+        폼 요소를 그룹화하고 그룹의 제목을 지정 -->
+      <fieldset>
+        <legend>분류1</legend>
+        입력란 <input type="text" /><br />
+        비밀번호 입력란 <input type="password" /> <br />
+        Email 입력란 <input type="email" /><br />
+        URL <input type="url" /> <br />
+        숫자 입력란 <input type="number" /> <br />
+        전화번호 입력란 <input type="tel" /> <br />
+        검색 <input type="search" placeholder="검색어를 입력해주세요" /> <br />
+        색상 <input type="color" /> <br />
+        범위 <input type="range" value="0" max="10" /> <br />
+        날짜 <input type="date" /> <br />
+        날짜 시간 <input type="datetime-local" /> <br />
+        월 <input type="month" /> <br />
+        주 <input type="week" /> <br />
+        시간 <input type="time" /> <br />
+        파일 <input type="file" /> <br />
+        이미지
+        <input
+          type="image"
+          src="../1.image/file/IMG_2824.jpeg"
+          style="width: 300px"
+        />
+      </fieldset>
+      <fieldset>
+        <legend>분류2</legend>
+        히든 <input type="hidden" value="abc" /> <br />
+        체크박스 <br />
+        <input type="checkbox" name="checkbox" value="111" /> 질문1
+        <input type="checkbox" name="checkbox" value="222" /> 질문2
+        <input type="checkbox" name="checkbox" value="333" /> 질문3 <br />
+        라디오 <br />
+        <input type="radio" name="radiobt" value="1" />선택1
+        <input type="radio" name="radiobt" value="2" />선택2
+        <input type="radio" name="radiobt" value="3" />선택3 <br />
+        셀렉트
+        <select name="select">
+          <option value="1">선택1</option>
+          <option value="2" selected>선택2</option>
+          <option value="3">선택3</option>
+        </select>
+        <br />
+        여러 줄 입력란<br />
+        <textarea cols="50" rows="10"></textarea><br />
+        <input type="button" onclick="alert('asd')" value="버튼1" /> <br />
+        <input type="button" onclick="buttonFunc()" value="버튼2" /> <br />
+        <input
+          type="button"
+          value="home으로"
+          onclick="location.href='../test.html'"
+        />
+      </fieldset>
+      <input type="submit" value="전송" />
+      <input type="reset" value="재입력" />
+    </form>
+  </body>
+</html>

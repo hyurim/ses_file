@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>폼 예제</title>
+  </head>
+  <style>
+    fieldset {
+      width: 300px;
+    }
+    #field_first {
+      border: solid 1px black;
+      width: 175px;
+    }
+    #id {
+      border: solid 1px black;
+    }
+    #pw {
+      border: solid 1px black;
+    }
+  </style>
+  <body>
+    <form action="" method="get">
+      <fieldset id="field_first">
+        <legend>회원정보</legend>
+        <label for="id">아이디 : </label>
+        <input type="text" id="id" name="id" value="hong" class="id" /><br />
+        <label for="pw">패스워드 : </label>
+        <input type="password" name="password" id="pw" />
+      </fieldset>
+      <fieldset>
+        <legend>과목</legend>
+        <label for="HTML">HTML</label>
+        <input type="checkbox" name="subject" id="HTML" value="HTML" />
+        <label for="CSS">CSS </label>
+        <input type="checkbox" name="subject" id="CSS" value="CSS" checked />
+        <label for="JS">JavaScript </label>
+        <input type="checkbox" name="subject" id="JS" value="JS" />
+        <br /><br />
+        <label for="upper">상 </label>
+        <input type="radio" name="grade" id="upper" value="상" />
+        <label for="middle">중 </label>
+        <input type="radio" name="grade" id="middle" value="중" />
+        <label for="lower">하 </label>
+        <input type="radio" name="grade" id="lower" value="하" /> <br />
+      </fieldset>
+      <input type="submit" value="전송하기" />
+      <input type="reset" value="취소하기" />
+    </form>
+  </body>
+</html>
