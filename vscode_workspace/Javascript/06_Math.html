@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math</title>
+    <script>
+      // Math
+      console.log(`원주율: ${Math.PI}`);
+      console.log(`오일러상수: ${Math.E}`);
+
+      // abs() - 절대값
+      console.log(`abs(): ${Math.abs(-3)}`);
+      console.log(`abs(): ${Math.abs("-2")}`);
+      console.log(`abs(): ${Math.abs("korea")}`);
+      console.log(`abs(): ${Math.abs(null)}`);
+      console.log(`abs(): ${Math.abs()}`);
+
+      // ceil() - 올림
+      console.log("------ceil------");
+      console.log(Math.ceil(0.95));
+      console.log(Math.ceil(5.00001));
+      console.log(Math.ceil(5));
+      console.log(Math.ceil(-0.95));
+      // js 에서는 0, -0을 구분하여 사용한다.
+
+      // floor() -> 내림
+      console.log("-----floor-----");
+      console.log(Math.floor(0.95));
+      console.log(Math.floor(5.0001));
+      console.log(Math.floor(5));
+      console.log(Math.floor(-0.95));
+
+      // trunc() 버림
+      console.log("-----trunc-----");
+      console.log(Math.trunc(0.95));
+      console.log(Math.trunc(5.0001));
+
+      // round() 반올림
+      console.log("-----round-----");
+      console.log(Math.trunc(0.95));
+      console.log(Math.trunc(5.0001));
+
+      console.log("=====참고=====");
+      console.log(0 / 0); //NaN
+      console.log(10 / 0); //Infinity
+
+      console.log(0.1 + 0.2);
+      console.log(0.1 + 0.2 === 0.3);
+      // 2진수로 변환하는 과정에서 오차가 생김
+      console.log((0.1 + 0.2).toFixed(1));
+      // 소수점 한 자리까지 생성
+
+      // max()
+      console.log("-----max-----");
+      console.log(Math.max(1, 5, 3));
+      console.log(Math.max(-1, -5, -3));
+
+      console.log("-----min-----");
+      console.log(Math.min(1, 5, 3));
+      console.log(Math.min(-1, -5, -3));
+
+      console.log("-----참고-----");
+      let ary = [1, 5, 3];
+      console.log(Math.max(ary));
+      // ** 스프레드 연산자 : 배열이나 객체를 확장하거나 복사
+      console.log(Math.max(...ary));
+
+      let arr1 = [1, 2, 3];
+      let arr2 = [...arr1];
+      console.log(arr2);
+
+      // pow(n1, n2) : 거듭제곱
+      console.log("-----pow-----");
+      console.log(Math.pow(5, 2));
+      console.log(Math.pow(4, 0.5));
+      console.log(5 ** 2);
+
+      // random => 0 ~ 1 미만의 난수 발생
+      console.log("------random------");
+      for (let i = 0; i < 5; i++) {
+        console.log(Math.random());
+      }
+
+      for (let i = 0; i < 5; i++) {
+        console.log(Math.trunc(Math.random * 45) + 1);
+      }
+    </script>
+  </head>
+  <body></body>
+</html>
