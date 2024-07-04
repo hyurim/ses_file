@@ -5,6 +5,202 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>예제</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        display: flex;
+        height: 100%;
+        width: 100%;
+      }
+
+      .sidebar {
+        width: 20%;
+        background-color: #e0e0e0;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .profile {
+        text-align: center;
+      }
+      .developerICON {
+        width: 100px;
+        height: 100px;
+      }
+      .main {
+        width: 80%;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      .navbar {
+        width: 100%;
+        background-color: #4caf50;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        box-sizing: border-box;
+      }
+
+      .nav-logo {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .nav-links {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+      }
+
+      .nav-links li {
+        margin-left: 20px;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 8px 16px;
+        transition: background-color 0.3s;
+      }
+
+      .nav-links a:hover {
+        background-color: #45a049;
+        border-radius: 4px;
+      }
+
+      .buttons {
+        width: 700px;
+        height: 50px;
+        background-color: cornflowerblue;
+        margin: 0 auto;
+      }
+
+      .content {
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        padding: 20px 0;
+        display: flex;
+        /* align-items: center; */
+      }
+
+      .image-placeholder {
+        width: 200px;
+        height: 300px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        margin-right: 20px;
+        display: inline-block;
+      }
+      .info {
+        display: flex;
+        flex-direction: column; /* 요소들을 세로로 배치 */
+      }
+      .information {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 30px;
+      }
+      .individual {
+        width: 50px;
+        word-wrap: break-word;
+      }
+      ul {
+        list-style-type: disc;
+        padding-left: 20px;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 20px;
+      }
+
+      .footer-column {
+        width: 30%;
+      }
+
+      h2,
+      h3 {
+        margin: 10px 0;
+        text-align: center;
+      }
+
+      p,
+      li,
+      ol {
+        margin: 5px 0;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <div class="profile">
+          <div><img src="./image/designer.png" class="developerICON" /></div>
+          <h2>Lim JongHyeon</h2>
+          <p>Web developer</p>
+        </div>
+      </div>
+      <div class="main">
+        <nav class="navbar">
+          <div class="nav-logo">
+            <a href="#"><img src="" alt="" /> </a>
+          </div>
+          <ul class="nav-links">
+            <li><a href="#">홈</a></li>
+            <li><a href="#">소개</a></li>
+            <li><a href="#">서비스</a></li>
+            <li><a href="#">연락처</a></li>
+          </ul>
+        </nav>
+        <div class="content">
+          <div>
+            <img
+              src="../HTML/1.image/file/IMG_2888.jpeg"
+              class="image-placeholder"
+            />
+          </div>
+          <div class="info">
+            <p class="information">information</p>
+            <!-- <h3>information</h3> -->
+            <div class="individual">
+              <ul></ul>
+            </div>
+            <div class="user">12</div>
+          </div>
+        </div>
+        <div class="footer">
+          <div class="footer-column">
+            <h3>자신 있는 기술</h3>
+            <ol>
+              <li>리스트 항목</li>
+              <li>리스트 항목</li>
+            </ol>
+          </div>
+          <div class="footer-column">
+            <h3>배운 기술</h3>
+            <ol>
+              <li>리스트 항목</li>
+              <li>리스트 항목</li>
+            </ol>
+          </div>
+          <div class="footer-column">
+            <h3>배우고 싶은 기술</h3>
+            <ol>
+              <li>리스트 항목</li>
+              <li>리스트 항목</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
