@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>function</title>
+    <script>
+      /*
+      Function
+      1. 함수의 문법
+      - 명명 규칙 : 영문자, _, $ 사용가능, 숫자와 특수문자는 사용불가
+      - 명명 관례 : 동사로 시작, 두 개 이상의 단어는 카멜케이스 camelCase
+      - function 함수 이름(arg1, arg2, arg3 ...) {
+        //code
+      }
+      2. 리턴
+      - return을 만나면 함수의 실행을 중지하고 호출한 곳으로 리턴 값을 반환
+      - return을 작성하지 않으면 undefined를 반환
+      }
+    */
+      // 함수 정의부
+      function addFunction(a, b) {
+        return a + b;
+      }
+      // 함수 호출부
+      let result = addFunction(1, 4);
+      console.log(result);
+      // 함수 호이스팅
+      // 함수 선언이 해당 코드가 실제로 실행되기 전에 끌어올려지는 현상
+      // 호이스팅은 선언만을 대상으로 하며, 할당은 런타임에 실행
+      console.log(a);
+      var a = 10;
+      console.log(a);
+
+      // console.log(b);
+      let b = 20;
+      console.log(b);
+
+      console.log("-----var scope-----");
+      if (true) {
+        console.log(x);
+        var x = 5;
+        console.log(x);
+      }
+      console.log(x);
+
+      console.log("-----let scope-----");
+      if (true) {
+        // console.log(y);
+        let y = 20;
+        console.log(y);
+      }
+      // console.log(y);
+
+      // 1. 함수 선언
+      // 함수 선언은 function 키워드로 시작하며
+      // , 이름이 명시된 함수를 정의
+      myFunc(); // 함수 호이스팅
+      function myFunc() {
+        document.write("함수선언<br>");
+        document.write("함수 정의문보다 호출문이 먼저 나와도" + "함수를 호출");
+      }
+
+      // 2. 함수 표현식
+      // myFunc2(); // 참조 에러 발생
+      let myFunc2 = function () {
+        document.write("함수표현식<br>");
+        document.write("함수의 할당이 호이스팅되지 않아 호출 불가");
+      };
+
+      // 내장 함수
+      console.log(typeof parseInt("1000"));
+      console.log(typeof parseFloat("3.14"));
+      console.log(typeof String(2000));
+
+      console.log(isNaN("5-3xx"));
+      console.log(isNaN("53"));
+    </script>
+  </head>
+  <body></body>
+</html>

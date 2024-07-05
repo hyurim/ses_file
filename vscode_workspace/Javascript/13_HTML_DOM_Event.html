@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      function upperCase() {
+        console.log("upperCase 실행");
+        let fname = document.getElementById("fname");
+        fname.value = fname.value.toUpperCase();
+      }
+      function focusOn() {
+        console.log("onfocus 실행");
+        document.querySelector("#fname").style.backgroundColor = "red";
+      }
+      function focusOut() {
+        console.log("onfocusout 실행");
+        document.querySelector("#fname").style.backgroundColor = "white";
+      }
+      function btnClick() {
+        console.log("btnClick 실행");
+        document.querySelector("#fname").value = "";
+      }
+      function changeRed() {
+        console.log("onmouseover 실행");
+        document.getElementById("mouse").style.color = "red";
+      }
+      function changeBlue() {
+        console.log("onmouseout 실행");
+        document.querySelector("#mouse").style.color = "blue";
+      }
+      let index = 0;
+      function changeImg() {
+        let img = document.querySelector("#img");
+        let file = ["IMG_2824.jpeg", "IMG_2804.jpeg", "IMG_2892.jpeg"];
+        // img.src = "../HTML/1.image/file/IMG_2824.jpeg";
+        // index = (index + 1) % file.length;
+        // document.querySelector(
+        //   "#img"
+        // ).src = `../HTML/1.image/file/${file[index]}`;
+        if (i >= file.length) {
+          i = 0;
+        }
+        img.src = "../HTML/1.image/file" + file[i];
+      }
+    </script>
+  </head>
+  <body>
+    <label for="fname">이름 입력 : </label>
+    <input
+      type="text"
+      name="fname"
+      id="fname"
+      onchange="upperCase()"
+      onfocus="focusOn()"
+      onfocusout="focusOut()"
+    />
+    <!-- onchange 값이 변경되는 순간을 기점으로 -->
+    <input type="button" value="초기화" onclick="btnClick()" />
+
+    <br /><br />
+    <div
+      id="mouse"
+      onmouseover="changeRed()"
+      onmouseout="changeBlue()"
+      style="font-size: x-large"
+    >
+      마우스를 올려보세요
+    </div>
+    <br /><br />
+
+    <img
+      src="../HTML/1.image/file/IMG_2892.jpeg"
+      id="img"
+      style="width: 300px; height: 300px"
+    />
+    <input type="button" value="변경" onclick="changeImg()" />
+  </body>
+</html>
