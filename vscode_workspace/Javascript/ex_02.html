@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>입력 글자 수 출력</title>
+    <script>
+      let textLength = 0;
+      const inputText = () => {
+        let text = document.getElementById("text");
+        let textValue = text.value;
+        text.style.border =
+          textValue.length >= 10 ? "2px solid red" : (text.style.border = "");
+        output(textValue);
+      };
+      const output = (inputValue) => {
+        let spanText = document.querySelector("#contents");
+        spanText.textContent =
+          inputValue.length < 10
+            ? `${inputValue.length}글자 입니다.`
+            : "10글자 이상입니다.";
+        if (inputValue == "") {
+          spanText.textContent = "";
+        }
+      };
+
+      const keyup = () => {
+        // input 태그(=객체)를 자바스크립트로 가져오기
+        let text = document.querySelector("#text2");
+        // span 태그(=객체)를 자바스크립트로 가져오기
+        let contents = document.querySelector("#contents");
+
+        if (text.value.length >= 10) {
+          contents.innerHTML = "10글자 이상입니다.";
+          text.style.borderColor = "red";
+          text.readOnly = true; // 이걸 true로 입력하면 더이상 수정이 되지 않음.
+        } else {
+          contents.innerHTML = text.value.length + "글자 입니다.";
+          text.style.borderColor = "black";
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <input type="text" id="text" oninput="inputText()" />
+    <input type="text" id="text2" onkeyup="keyup()" />
+    <span id="contents"></span>
+  </body>
+</html>
+<!-- window.onload ~~ 로 쓸 경우 해당 부분에 함수 호출이 필요가 없음. 따라서 가독성이 더 좋음. -->
+<!-- 내가 한 방식은 이벤트가 발생하면 함수를 호출하는 형식 -->

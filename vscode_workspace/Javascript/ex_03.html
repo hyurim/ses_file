@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      window.onload = () => {
+        let select = document.querySelector("#mySelect");
+        imgSelect(select);
+        select.addEventListener("change", () => imgSelect(select));
+      };
+      const imgSelect = (select) => {
+        let img = document.querySelector("#myImg");
+        const selectValue = select.value;
+        img.src = `../HTML/1.image/file/${selectValue}.jpeg`;
+      };
+
+      window.onload = () => {
+        let sel = document.querySelector("#sel");
+        sel.addEventListener("change", () => {
+          let img = document.querySelector("#selImg");
+
+          for (let i = 0; i < this.length; i++) {
+            if (this.option[i].selected == true) {
+              img.src = "../HTML/1.image/file/" + this.options[i].value;
+            }
+          }
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <select name="사진" id="mySelect">
+      <option value="IMG_2824" selected>나고야 야경</option>
+      <option value="IMG_2781">나고야 벚꽃</option>
+      <option value="IMG_2896">오가키 벚꽃</option>
+    </select>
+    <img src="" alt="" id="myImg" style="width: 300px; height: 300px" />
+
+    <br /><br /><br />
+    <select id="sel">
+      <option value="IMG_2824.jpeg">나고야 야경</option>
+      <option value="IMG_2781.jpeg">나고야 벚꽃</option>
+      <option value="IMG_2896.jpeg">오가키 벚꽃</option>
+    </select>
+    <img
+      src="../HTML/1.image/file/IMG_2824.jpeg"
+      id="selImg"
+      style="width: 300px; height: 300px"
+    />
+  </body>
+</html>

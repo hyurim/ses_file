@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>배경색 바꾸기</title>
+    <script>
+      // const color = ["white", "lightblue", "lightpink", "yellow"];
+      // let index = 0;
+      // const backgroundChange = () => {
+      //   if (index >= color.length) {
+      //     index = 0;
+      //   }
+      //   document.body.style.backgroundColor = color[index];
+      //   index++;
+      // };
+      let i = 0;
+      window.onload = () => {
+        let btn = document.querySelector("#btn");
+        const color = ["white", "lightblue", "lightpink", "yellow"];
+        btn.addEventListener("click", () => {
+          if (i >= color.length) {
+            i = 0;
+          }
+          let bodyTag = document.querySelector("body");
+          bodyTag.style.backgroundColor = color[i];
+          i++;
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <button onclick="backgroundChange()">배경색 변경</button>
+  </body>
+</html>

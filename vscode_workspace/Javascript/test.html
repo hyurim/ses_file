@@ -6,92 +6,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
+      table {
+        border: 1px solid black;
+        margin: auto; /* 영역의 중앙 정렬은 왼, 오 margin 설정 */
+        width: 700px;
       }
-
-      #LoginAll {
-        justify-content: center;
-        align-items: center;
+      th {
+        width: 200px;
+        height: 120px;
+      }
+      td {
+        width: 400px;
+        height: 120px;
         text-align: center;
-        width: 1024px; // 2560(QHD), 1920(FHD), 1680, 1440
-        height: 550px;
-        margin: 0 auto;
-        overflow: hidden;
-
-        .loginTitle {
-          text-align: center;
-          font-weight: bold;
-          font-size: 20px;
-          margin-top: 100px;
-        }
-        #inputLogin {
-          width: 256px;
-          height: 50px;
-          border: 2px solid #99d9d9;
-          justify-content: center;
-          border-radius: 5px;
-          margin-bottom: 20px;
-        }
-        #btn {
-          background-color: #61c4c4;
-          border-radius: 10px;
-          color: white;
-          outline: 0;
-          border: 0;
-          width: 256px;
-          height: 40px;
-          margin-top: 20px;
-          margin-bottom: 20px;
-        }
-        .loginCheck {
-          text-align: center;
-          color: gray;
-        }
-        .loginBottom {
-          text-decoration: none;
-          padding-bottom: 50px;
-          color: gray;
-        }
-        .error {
-          font-size: 15px;
-          color: red;
-        }
+      }
+      input[type="text"],
+      input[type="password"] {
+        width: 300px;
+        height: 50px;
+        font-size: large;
+      }
+      p {
+        font-size: 24px;
+      }
+      h1 {
+        font-size: 60px;
+        margin: 40px auto;
+        text-align: center;
+      }
+      .btn {
+        width: 100px;
+        height: 30px;
+        background-color: aquamarine;
+        border-color: blue;
       }
     </style>
+    <script>
+      window.onload = () => {
+        let userid = document.querySelector("#userid");
+        let userpw = document.querySelector("#userpw");
+        let checkpw = document.querySelector("#checkpw");
+
+        userid.addEventListener("keyup", () => {
+          if (userid.value.length >= 8) {
+            userid.style.backgroundColor = "lightblue";
+          } else {
+            userid.style.backgroundColor = "lightpink";
+          }
+        });
+
+        checkpw.addEventListener("keyup", () => {
+          if (userpw.value == checkpw.value) {
+            checkpw.style.backgroundColor = "lightblue";
+          } else {
+            checkpw.style.backgroundColor = "lightpink";
+          }
+        });
+      };
+      function formCheck() {
+        let userid = document.querySelector("#userid");
+        let userpw = document.querySelector("#userpw");
+        let pwcheck = document.querySelector("#checkpw");
+
+        if (userid.value.length < 8) {
+          alert("ID는 8자 이상으로 해라!!");
+          return false;
+        }
+        if (
+          userpw.value == null ||
+          checkpw.value == null ||
+          userpw.value == "" ||
+          checkpw.value == "" ||
+          userpw.value != checkpw.value
+        ) {
+          alert("비밀번호가 일치하지 않거나 틀렸습니다.");
+          return false;
+        }
+        return true;
+      }
+    </script>
   </head>
   <body>
-    <div id='LoginAll'>
-      <p className="loginTitle">로그인</p>
-      <div id='LoginAll'>
-          {/* form */}
-          <form className="loginForm">
-              <input type="m_email" autocomplete="off"  name="email" id="inputLogin" onChange={ (e)=>{
-                  setmemail(e.target.value);if(e.target.value!=='')setisemailnull(false);}} placeholder="이메일" />
-              <br />
-              <input type="password" name="pw" id="inputLogin" 
-              placeholder="비밀번호" minlength="8" maxlength="16" onChange={ (e)=>{
-                  setLoginPassword(e.target.value); if(e.target.value!=='')setispasswordnull(false);}}/>                         
-              <br />
-              <div class="mb-3" className='loginCheck'>
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1"   checked={checked} onChange={handlechange}/>
-                  <label class="form-check-label" for="exampleCheck1">로그인 상태 유지</label>
-              </div>
-              {(isemailnull||isPasswordnull)?
-              <div>
-                  <button id='btn' type="submit" onClick={()=>submitfail()} >로그인</button>     
-              </div> 
-              :
-              <div>
-                  <button id='btn' type="submit" onClick={()=>submit()} >로그인</button></div>
-              }
-              <div>
-                  <Link to="#passwordfind" className='loginBottom' >비밀번호 찾기 </Link>ㅣ
-                  <Link to="/Register" className='loginBottom'> 회원가입 </Link>
-              </div>
-          </form>
-      </div>
-  </div>
+    <h1>회원 가입</h1>
+    <table>
+      <form action="" method="get">
+        <tr>
+          <th><p>아이디</p></th>
+          <td>
+            <input
+              type="text"
+              id="userid"
+              name="userid"
+              placeholder="아이디는 8자 이상"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th><p>비밀번호</p></th>
+          <td><input type="password" id="userpw" name="userpw" /></td>
+        </tr>
+        <tr>
+          <th><p>비밀번호 확인</p></th>
+          <td>
+            <input type="password" id="checkpw" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="submit" value="가입" class="btn" />
+            <input type="submit" value="취소" class="btn" />
+          </td>
+        </tr>
+      </form>
+    </table>
   </body>
 </html>
