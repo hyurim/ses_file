@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      #LoginAll {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: 1024px; // 2560(QHD), 1920(FHD), 1680, 1440
+        height: 550px;
+        margin: 0 auto;
+        overflow: hidden;
+
+        .loginTitle {
+          text-align: center;
+          font-weight: bold;
+          font-size: 20px;
+          margin-top: 100px;
+        }
+        #inputLogin {
+          width: 256px;
+          height: 50px;
+          border: 2px solid #99d9d9;
+          justify-content: center;
+          border-radius: 5px;
+          margin-bottom: 20px;
+        }
+        #btn {
+          background-color: #61c4c4;
+          border-radius: 10px;
+          color: white;
+          outline: 0;
+          border: 0;
+          width: 256px;
+          height: 40px;
+          margin-top: 20px;
+          margin-bottom: 20px;
+        }
+        .loginCheck {
+          text-align: center;
+          color: gray;
+        }
+        .loginBottom {
+          text-decoration: none;
+          padding-bottom: 50px;
+          color: gray;
+        }
+        .error {
+          font-size: 15px;
+          color: red;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id='LoginAll'>
+      <p className="loginTitle">로그인</p>
+      <div id='LoginAll'>
+          {/* form */}
+          <form className="loginForm">
+              <input type="m_email" autocomplete="off"  name="email" id="inputLogin" onChange={ (e)=>{
+                  setmemail(e.target.value);if(e.target.value!=='')setisemailnull(false);}} placeholder="이메일" />
+              <br />
+              <input type="password" name="pw" id="inputLogin" 
+              placeholder="비밀번호" minlength="8" maxlength="16" onChange={ (e)=>{
+                  setLoginPassword(e.target.value); if(e.target.value!=='')setispasswordnull(false);}}/>                         
+              <br />
+              <div class="mb-3" className='loginCheck'>
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1"   checked={checked} onChange={handlechange}/>
+                  <label class="form-check-label" for="exampleCheck1">로그인 상태 유지</label>
+              </div>
+              {(isemailnull||isPasswordnull)?
+              <div>
+                  <button id='btn' type="submit" onClick={()=>submitfail()} >로그인</button>     
+              </div> 
+              :
+              <div>
+                  <button id='btn' type="submit" onClick={()=>submit()} >로그인</button></div>
+              }
+              <div>
+                  <Link to="#passwordfind" className='loginBottom' >비밀번호 찾기 </Link>ㅣ
+                  <Link to="/Register" className='loginBottom'> 회원가입 </Link>
+              </div>
+          </form>
+      </div>
+  </div>
+  </body>
+</html>

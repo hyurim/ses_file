@@ -1,5 +1,6 @@
 # ses_file
-JS : Airbnb JavaScript Style Guide </br>
+
+JS : https://github.com/tipjs/javascript-style-guide </br>
 Java : Google Java Style Guide </br>
 SQL : https://www.sqlstyle.guide/ko/ </br>
 참조
