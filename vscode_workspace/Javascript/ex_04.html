@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>데이터 출력 예제</title>
+    <style>
+      #target {
+        display: none;
+      }
+      table {
+        border-collapse: collapse;
+        width: 50%;
+        margin: 10px;
+      }
+      th {
+        background-color: beige;
+
+        border: 1px solid black;
+        padding: 10px;
+        text-align: center;
+      }
+      td {
+        border: 1px solid black;
+        padding: 10px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="button" value="정보 보기" onclick="infoOpen()" />
+    <input type="button" value="정보 닫기" onclick="infoClose()" />
+    <div id="target">
+      <table id="table"></table>
+    </div>
+  </body>
+  <script>
+    const array = [
+      {
+        name: "가나다",
+        grade: "일반회원",
+        create: "20/01/03",
+      },
+      {
+        name: "라바사",
+        grade: "실버회원",
+        create: "22/05/05",
+      },
+      {
+        name: "아자차",
+        grade: "골드회원",
+        create: "22/05/05",
+      },
+    ];
+
+    const div = document.querySelector("#target");
+    const table = document.querySelector("#table");
+
+    const infoOpen = () => {
+      let tab = "";
+      tab += "<tr><th>Name</th><th>Grade</th><th>Create</th></tr>";
+      array.forEach((value) => {
+        tab += `<tr><td>${value.name}</td><td>${value.grade}</td><td>${value.create}</td></tr>`;
+        table.innerHTML = tab;
+      });
+      div.style.display = "block";
+    };
+
+    const infoClose = () => {
+      table.innerHTML = "";
+      div.style.display = "none";
+    };
+  </script>
+</html>

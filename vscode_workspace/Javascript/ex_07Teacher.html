@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      window.onload = () => {
+        let btn = document.querySelector("#btn");
+
+        btn.addEventListener("click", () => {
+          let ssn = document.querySelector("#ssn");
+          let year = parseInt(ssn.value.substring(0, 2));
+          let gender = parseInt(ssn.value.charAt(7));
+
+          let d = new Date();
+          let now_year = d.getFullYear();
+
+          if (gender == 1 || gender == 2) {
+            year = 1900 + year;
+          } else if (gender == 3 || gender == 4) {
+            year = 2000 + year;
+          }
+
+          if (gender == 1 || gender == 3) {
+            gender = "남자";
+          } else {
+            gender = "여자";
+          }
+          let age = parseInt(now_year) - parseInt(year);
+
+          let result = document.querySelector("#result");
+          result.innerHTML = `${year}년생 ${age}세 ${gender}입니다.`;
+        });
+      };
+    </script>
+  </head>
+  <body></body>
+</html>

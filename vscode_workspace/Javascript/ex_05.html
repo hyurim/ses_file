@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>주민등록번호 예제</title>
+  </head>
+  <body>
+    <label for="ssn">주민등록번호</label>
+    <input type="text" id="ssn" placeholder="ex. 000000-0000000" />
+    <input type="button" value="정보 출력" id="btn" onclick="info()" />
+    <div id="result"></div>
+  </body>
+  <script>
+    const num = document.querySelector("#ssn");
+    const div = document.querySelector("#result");
+
+    const info = () => {
+      let number = num.value;
+      const year = isYearValid(number);
+      const age = isAge(year);
+      const gender = isGender(number);
+      div.innerHTML = `${year}년생 ${age}세 ${gender}입니다.`;
+    };
+
+    const isYearValid = (number) => {
+      const birth = number.substring(7, 8);
+      let birthYear = number.substr(0, 2);
+      return Number(birth) <= 2 ? "19" + birthYear : "20" + birthYear;
+    };
+
+    const isAge = (number) => {
+      const today = new Date();
+      const currentYear = today.getFullYear();
+      let currentAge = currentYear - number;
+      return ++currentAge;
+    };
+
+    const isGender = (number) => {
+      const gender = number.substring(7, 8);
+      return gender == "1" || gender == "3" ? "남자" : "여자";
+    };
+  </script>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>사칙연산 계산기</title>
+  </head>
+  <body>
+    <div>
+      <input type="text" id="first" />
+      <select id="cal">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+      </select>
+      <input type="text" id="second" />
+      =<input type="text" readonly id="result" />
+      <input type="button" id="calculation" value="계산" onclick="result()" />
+      <input type="button" id="reset" value="리셋" onclick="reset()" />
+    </div>
+  </body>
+  <script>
+    const first = document.querySelector("#first");
+    const second = document.querySelector("#second");
+    const select = document.querySelector("#cal");
+    const res = document.querySelector("#result");
+
+    const result = () => {
+      if (isNaN(first.value) || isNaN(second.value)) {
+        alert("숫자를 입력해주세요");
+        if (isNaN(first.value)) {
+          first.focus();
+          first.select();
+        } else {
+          second.focus();
+          second.select();
+        }
+        return;
+      }
+      const num1 = parseInt(first.value);
+      const num2 = parseInt(second.value);
+      if (num2 === 0 && select.value === "/") {
+        alert("0으로 나눌 수 없습니다.");
+        second.focus();
+        second.select();
+        return;
+      }
+      // const calIsValid = calValid(first, second);
+      const resultValue = calculation(select.value, num1, num2);
+      res.value = resultValue;
+    };
+
+    // const isValid = (first, second) => {
+    //   console.log(first.value);
+    // };
+
+    // const calIsValid = (first, second) => {};
+
+    const calculation = (value, num1, num2) => {
+      switch (value) {
+        case "+":
+          return num1 + num2;
+          break;
+        case "-":
+          return num1 - num2;
+          break;
+        case "*":
+          return num1 * num2;
+          break;
+        case "/":
+          return num1 / num2;
+          break;
+      }
+    };
+
+    const reset = () => {
+      first.value = "";
+      second.value = "";
+      res.value = "";
+      select.value = "+";
+    };
+  </script>
+</html>
+<!-- 0으로 나누면 계산되지 않는다는 알림 발생
+
+    입력 박스 3개 셀렉트 1개(사칙연산), 버튼 2개
+    계산 버튼을 누르면 사칙연산에 대한 결과를 입력 박스에 출력
+    입력 박스에 숫자가 아닌 값이 들어올 경우 alert 처리
+    alert 처리 후 해당 입력 박스에 focus, select 처리
+    0으로 연산시 '0으로 나눌 수 없습니다.'' 문구 처리
+    trim(), isNaN(), focus(), select(), parseInt()     -->
