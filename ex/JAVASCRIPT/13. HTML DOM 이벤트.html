@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function upperCase() {
+            console.log('upperCase 실행');
+            let fname = document.getElementById('fname');
+            fname.value = fname.value.toUpperCase();
+        }
+        function focusOn() {
+            console.log('onfocus 실행');
+            document.querySelector('#fname').style.backgroundColor 
+                = 'red';
+        }
+        function focusOut() {
+            console.log('onfocusout 실행');
+            document.querySelector('#fname').style.backgroundColor 
+                = 'white';
+        }
+        function btnClick() {
+            console.log('btnClick 실행');
+            document.querySelector('#fname').value = '';
+        }
+        function changeRed() {
+            console.log('changeRed 실행');
+            document.getElementById('mouse').style.color = 'red';
+        }
+        function changeBlue() {
+            console.log('changeBlue 실행');
+            document.querySelector('#mouse').style.color = 'blue';
+        }
+
+        let i = 1; //전역변수
+        function changeImg() {
+            let img = document.querySelector('#img');
+            let file = ["aaa.jpg", "bbb.jpg", "ccc.jpg"];
+            // img.src = '../HTML/1. image/file/aaa.jpg';
+            // 변경 버튼을 누를 때마다 3개정도의 이미지가
+            // 번갈아가면서 변경되도록 코드를 작성해보세요
+            if (i >= file.length) {
+                i = 0;
+            }
+            img.src = '../HTML/1. image/file/' + file[i];
+            i++;
+        }
+    </script>
+</head>
+<body>
+    <label for="fname">이름 입력: </label>
+    <input type="text" name="fname" id="fname" 
+        onchange="upperCase()" onfocus="focusOn()" 
+        onfocusout="focusOut()">
+    <input type="button" value="초기화" onclick="btnClick()">
+
+    <br><br>
+
+    <div id="mouse" onmouseover="changeRed()"
+        onmouseout="changeBlue()"
+        style="font-size: x-large;">
+        마우스를 올려보세요
+    </div>
+
+    <br><br>
+
+    <img src="../HTML/1. image/file/aaa.jpg" id="img">
+    <input type="button" value="변경" onclick="changeImg()">
+</body>
+</html>

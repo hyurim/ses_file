@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>사칙연산 계산기</title>
+    <script>
+      const cal = () => {
+        let num1 = document.querySelector("#num1");
+        let num2 = document.querySelector("#num2");
+        let op = document.querySelector("#op");
+        let num3 = document.querySelector("#num3");
+        if (num1.value.trim().length == 0 || isNaN(num1.value)) {
+          alert("숫자를 입력해주세요");
+          num1.focus();
+          num1.select();
+          return;
+        }
+        if (num2.value.trim().length == 0 || isNaN(num2.value)) {
+          alert("숫자를 입력해주세요");
+          num2.focus();
+          num2.select();
+          return;
+        }
+        let result;
+        switch (op.value) {
+          case "+":
+            result = parseInt(num1.value) + parseInt(num2.value);
+            break;
+          case "-":
+            result = parseInt(num1.value) - parseInt(num2.value);
+            break;
+          case "*":
+            result = parseInt(num1.value) * parseInt(num2.value);
+            break;
+          case "/":
+            if (num2.value == 0) {
+              alert("0으로 나눌 수 없습니다.");
+              num2.focus();
+              return;
+            }
+            result = parseInt(num1.value) / parseInt(num2.value);
+            break;
+          default:
+            alert("연산자 오류입니다.");
+            break;
+        }
+        num3.value = result;
+      };
+    </script>
+  </head>
+  <body>
+    <h1>* 사칙연산 계산기</h1>
+    <form action="" method="get">
+      <input type="text" id="num1" />
+      <select id="op">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+      </select>
+      <input type="text" id="num2" />
+      <span></span>
+      <input type="text" id="num3" readonly />
+      <input type="button" onclick="cal()" value="계산" />
+      <input type="button" id="reset" value="리셋" />
+    </form>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>입력 글자 수 출력</title>
+    <script>
+        function keyup() {
+            // input 태그(=객체)를 자바스크립트로 가져오기
+            let text = document.querySelector('#text');
+            // span 태그(=객체)를 자바스크립트로 가져오기
+            let contents = document.querySelector('#contents');
+
+            if (text.value.length >= 10) {
+                contents.innerHTML = '10글자 이상입니다.';
+                text.style.borderColor = 'red';
+                text.readOnly = true;
+            } else {
+                text.style.borderColor = 'black';
+                contents.innerText = text.value.length + '글자';
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="text" onkeyup="keyup()">
+    <span id="contents"></span>
+</body>
+</html>

@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+}
+
+.container {
+  width: 600px;
+  height: 600px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+}
+
+img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+table {
+  width: 100%;
+}
+
+table,
+th,
+td {
+  padding: 5px;
+  border: 1px dotted black;
+  border-collapse: collapse;
+}
+
+tr th {
+  text-align: left;
+  width: 30%;
+}
+
+tr th::before {
+    content: '*';
+    color: red;
+}
+
+textarea {
+  width: -webkit-fill-available;
+}
+
+/* 선택자 -> # : 아이디(id)
+            . : 클래스(class)
+            안붙이면 : 태그
+*/

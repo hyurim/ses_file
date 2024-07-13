@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>팝업창 예제</title>
+    <script>
+      window.onload = () => {
+        let btn1 = document.querySelector("#btn1");
+        let btn2 = document.querySelector("#btn2");
+
+        let win;
+        let timer;
+
+        btn1.addEventListener("click", () => {
+          win = window.open(
+            "./ex_07_sub.html",
+            // 서버창을 만들기 위해서는 도메인이 같아야함.
+            "",
+            "top=100, left=100, width=150, height=100"
+          );
+          timer = setInterval(() => {
+            win.moveTo(
+              Math.floor(Math.random() * 800),
+              Math.floor(Math.random * 600)
+            );
+          }, 300);
+        });
+        btn2.addEventListener("click", () => {
+          clearInterval(timer);
+          win.close();
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <input type="button" value="클릭" id="btn1" />
+    <input type="button" value="스탑" id="btn2" />
+  </body>
+</html>

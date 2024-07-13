@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="kor">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Front-End</title>
+    <link rel="stylesheet" href="exam_style.css" />
+    <script src="./exam_script.js"></script>
+  </head>
+  <body>
+    <div id="frame">
+      <header>
+        <h1>[ 정보처리 기사 필기 결과 ]</h1>
+        <h2># 가채점 예상 점수를 입력하세요</h2>
+      </header>
+      <main>
+        <h4>맞춘 개수</h4>
+        <form>
+          <table>
+            <tr>
+              <th>1. 소프트웨어 설계:</th>
+              <td id="text">20문제 중</td>
+              <td><input type="text" id="fir" value="0" /> 개</td>
+              <td><div id="firstResult"></div></td>
+            </tr>
+            <tr>
+              <th>2. 소프트웨어 개발:</th>
+              <td id="text">20문제 중</td>
+              <td><input type="text" id="sec" value="0" /> 개</td>
+              <td><div id="secResult"></div></td>
+            </tr>
+            <tr>
+              <th>3. 데이터베이스 구축:</th>
+              <td id="text">20문제 중</td>
+              <td><input type="text" id="thr" value="0" /> 개</td>
+              <td><div id="thrResult"></div></td>
+            </tr>
+            <tr>
+              <th>4. 프로그래밍 언어활용:</th>
+              <td id="text">20문제 중</td>
+              <td><input type="text" id="four" value="0" /> 개</td>
+              <td><div id="fourResult"></div></td>
+            </tr>
+            <tr>
+              <th>5. 정보시스템 구축관리:</th>
+              <td id="text">20문제 중</td>
+              <td><input type="text" id="five" value="0" /> 개</td>
+              <td><div id="fiveResult"></div></td>
+            </tr>
+          </table>
+        </form>
+        <div id="buttonDiv">
+          <input
+            type="button"
+            value="최종 결과 확인"
+            id="submitBtn"
+            onclick="submit()"
+          />
+        </div>
+      </main>
+      <footer id="result" style="display: none">
+        <h2># 최종결과</h2>
+        <h4>
+          합격: 100점을 만점으로 하여 과목당 40점 이상, 전과목 평균 60점 이상.
+        </h4>
+
+        <ul>
+          <li id="average"></li>
+          <li id="failSubject"></li>
+        </ul>
+        <div id="passFail"></div>
+      </footer>
+    </div>
+  </body>
+</html>

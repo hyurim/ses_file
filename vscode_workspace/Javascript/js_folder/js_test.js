@@ -8,4 +8,5 @@
   HTML을 처리하는 방식으로 문자열을 출력하기 때문에
   문자열 내의 개행 문자가 HTML에서 개행으로 해석
 */
-document.write("안녕하세요111<br>");
+// document.write("안녕하세요111<br>");
+console.log(parseFloat("3aa"));

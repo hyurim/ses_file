@@ -22,41 +22,62 @@
     </div>
   </body>
   <script>
-    const first = document.querySelector("#first");
-    const second = document.querySelector("#second");
-    const select = document.querySelector("#cal");
-    const res = document.querySelector("#result");
-
     const result = () => {
-      if (isNaN(first.value) || isNaN(second.value)) {
-        alert("숫자를 입력해주세요");
-        if (isNaN(first.value)) {
-          first.focus();
-          first.select();
-        } else {
-          second.focus();
-          second.select();
-        }
+      const [first, second, select, res] = func();
+      const [firstNum, secondNum, selectValue, num1, num2] = value(
+        first,
+        second,
+        select,
+        res
+      );
+      const numIsValid = isValid(first, second, firstNum, secondNum);
+      const calValid = calIsValid(num2, selectValue);
+      if (numIsValid == false || calValid == false) {
         return;
       }
-      const num1 = parseInt(first.value);
-      const num2 = parseInt(second.value);
-      if (num2 === 0 && select.value === "/") {
-        alert("0으로 나눌 수 없습니다.");
-        second.focus();
-        second.select();
-        return;
-      }
-      // const calIsValid = calValid(first, second);
       const resultValue = calculation(select.value, num1, num2);
       res.value = resultValue;
     };
 
-    // const isValid = (first, second) => {
-    //   console.log(first.value);
-    // };
+    const func = () => {
+      const first = document.querySelector("#first");
+      const second = document.querySelector("#second");
+      const select = document.querySelector("#cal");
+      const res = document.querySelector("#result");
+      return [first, second, select, res];
+    };
 
-    // const calIsValid = (first, second) => {};
+    const value = (first, second, select, res) => {
+      const firstNum = first.value.trim();
+      const secondNum = second.value.trim();
+      const selectValue = select.value;
+      const num1 = parseInt(firstNum);
+      const num2 = parseInt(secondNum);
+      return [firstNum, secondNum, selectValue, num1, num2];
+    };
+
+    const isValid = (first, second, firstNum, secondNum) => {
+      if (isNaN(firstNum) || isNaN(secondNum)) {
+        alert("숫자를 입력해주세요");
+        isNaN(firstNum) ? focusAndSelect(first) : focusAndSelect(second);
+        return false;
+      }
+      return true;
+    };
+    const focusAndSelect = (element) => {
+      element.focus();
+      element.select();
+      return;
+    };
+    const calIsValid = (num2, selectValue) => {
+      if (num2 === 0 && selectValue === "/") {
+        alert("0으로 나눌 수 없습니다.");
+        second.focus();
+        second.select();
+        return false;
+      }
+      return true;
+    };
 
     const calculation = (value, num1, num2) => {
       switch (value) {
@@ -76,6 +97,7 @@
     };
 
     const reset = () => {
+      const [first, second, select, res] = func();
       first.value = "";
       second.value = "";
       res.value = "";

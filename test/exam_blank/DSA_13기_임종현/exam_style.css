@@ -1,0 +1,56 @@
+/* css 작성 */
+#frame {
+  width: 800px;
+  height: 620px;
+  border: 1px dotted black;
+  margin: auto;
+}
+h1 {
+  text-align: center;
+  background-color: blue;
+  color: white;
+  padding-top: 10px;
+}
+h2 {
+  margin-left: 10px;
+}
+main {
+  background-color: lightblue;
+  padding-top: 20px;
+}
+#buttonDiv{
+  text-align: center;
+  margin-top: 20px;
+  padding-bottom: 10px;
+}
+#submitBtn {
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: aqua;
+}
+table {
+  margin-left: 50px;
+}
+tr th {
+  text-align: left;
+}
+#text{
+  padding-left: 25px;
+}
+tr td input {
+  padding-left: 10px;
+}
+h4 {
+  color: blue;
+  margin-left: 20px;
+}
+footer div {
+  text-align: center;
+}
+#passFail {
+  width: 100px;
+  margin: 0 auto;
+  background-color: gainsboro;
+  color: red;
+  
+}
