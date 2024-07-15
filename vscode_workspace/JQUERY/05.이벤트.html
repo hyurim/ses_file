@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      $(document).ready(() => {
+        $("#button1").on("click", testbutton);
+        $("#button2").on("click", testbuttonOff);
+        $("#button3").on("click", testbuttonOn);
+
+        $("text1").on("click", () => {
+          alert("#text1의 click 이벤트 발생");
+        });
+        $("text2").on("click", () => {
+          // 특정 이벤트를 수동으로 발생시키는 데 사용
+          // 대상 객체에 이벤트를 강제 발생시킴
+          $("#text1").trigger("click");
+        });
+        $("#text3").on("click", () => {
+          setTimeout(() => {
+            $("#text1").trigger("click");
+          }, 3000);
+        });
+        $("#img1, #img2").on("mouseenter", function () {
+          let w = $(this).width();
+          let h = $(this).height();
+
+          $(this).css("width", w * 2);
+          $(this).css("height", h * 2);
+        });
+        $("#img1, #img2").on("mouseleave", function () {
+          let w = $(this).width();
+          let h = $(this).height();
+
+          $(this).css("width", w / 2);
+          $(this).css("height", h / 2);
+        });
+        $(".bt").on("click", function () {
+          console.log(event);
+          console.log(event.timeStamp);
+          console.log("clicked element: " + event.target.tagName);
+          let msg = $(this).attr("data");
+          alert("data 속성값 : " + msg);
+        });
+      });
+      function testbutton() {
+        alert("button1 클릭함");
+      }
+      function testbuttonOff() {
+        $("#button1").off("click");
+      }
+      function testbuttonOn() {
+        $("#button1").on("click", testbutton);
+      }
+    </script>
+  </head>
+  <body>
+    <h1>[ jQuery 이벤트 ]</h1>
+
+    <ol>
+      <li>
+        이벤트 관련 함수
+        <ul>
+          <li>
+            on() 함수 - 이벤트 연결 <br />
+            $(셀렉터).on(이벤트이름, 함수)
+          </li>
+          <li>
+            off() 함수 - 이벤트 연결 제거 <br />
+            $(셀렉터).off(이벤트이름, 함수)
+          </li>
+          <li>
+            trigger() 함수 - 이벤트 강제 발생 <br />
+            $(셀렉터).trigger(이벤트이름)
+          </li>
+        </ul>
+      </li>
+      <li>
+        이벤트 종류
+        <table>
+          <tr>
+            <th style="width: 200px">Mouse Events</th>
+            <th style="width: 200px">Keyboard Events</th>
+            <th style="width: 200px">Form Events</th>
+            <th style="width: 200px">Document/Window Events</th>
+          </tr>
+          <tr>
+            <td>click</td>
+            <td>keypress</td>
+            <td>submit</td>
+            <td>load</td>
+          </tr>
+          <tr>
+            <td>dblclick</td>
+            <td>keydown</td>
+            <td>change</td>
+            <td>resize</td>
+          </tr>
+          <tr>
+            <td>mouseenter</td>
+            <td>keyup</td>
+            <td>focus</td>
+            <td>scroll</td>
+          </tr>
+          <tr>
+            <td>mouseleave</td>
+            <td>&nbsp;</td>
+            <td>blur</td>
+            <td>unload</td>
+          </tr>
+        </table>
+      </li>
+      <li>
+        이벤트 처리 연결과 해제
+        <p><input type="button" value="button1" id="button1" /></p>
+        <p>
+          <input
+            type="button"
+            value="button1의 이벤트 연결 해제"
+            id="button2"
+          />
+        </p>
+        <p>
+          <input
+            type="button"
+            value="button1의 이벤트 다시 연결"
+            id="button3"
+          />
+        </p>
+      </li>
+      <li>
+        이벤트 강제 발생과 시간 지연 메서드
+        <p id="text1">일반 텍스트에 이벤트 연결</p>
+        <p id="text2">이벤트 강제 발생</p>
+        <p id="text3">3초 뒤에 이벤트 강제 발생</p>
+      </li>
+      <li>
+        여러 객체의 mouseenter, mouseleave 이벤트
+        <p>
+          <img
+            src="../HTML/1.image/file/IMG_2781.jpeg"
+            id="img1"
+            style="width: 300px; height: 300px"
+          />
+          <img
+            src="../HTML/1.image/file/IMG_2804.jpeg"
+            id="img2"
+            style="width: 300px; height: 300px"
+          />
+        </p>
+      </li>
+      <li>여러 객체의 사용자 정의 속성 읽기</li>
+      <p><input type="button" value="버튼1" class="bt" data="1" /></p>
+      <p><input type="button" value="버튼2" class="bt" data="2" /></p>
+      <p><input type="button" value="버튼3" class="bt" data="3" /></p>
+    </ol>
+  </body>
+</html>

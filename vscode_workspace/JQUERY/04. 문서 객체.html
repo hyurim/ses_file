@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./jq_folder/jquery-3.7.1.js"></script>
+    <script>
+      // window.onload = function() { }
+      // $(document).ready(function() { })
+      $(function () {
+        // element.addEventListener('click', function() { })
+        $("#btn1").on("click", function () {
+          // jquery의 html() 함수가 선택된 첫 번째
+          // 요소의 html 컨텐츠만을 반환
+          let s = $("h3").html();
+          console.log(s);
+          $("h3").each(function (i, ob) {
+            console.log(i, $(ob).html());
+          });
+        });
+
+        $("#bt2").on("click", () => {
+          // jquery의 text() 메서드는 선택된 요소들
+          // 각각의 텍스트 컨텐츠를 연결하여 하나의 문자열로 반환
+          let s = $("h3").text();
+          console.log(s);
+        });
+        $("#bt3").on("click", () => {
+          let s = $("#text1").val();
+          alert(s);
+        });
+
+        $("#bt4").on("click", () => {
+          $("#div1").html('<p style="color: red;"> 변경한 내용');
+          $("#div2").text('<p style="color: red;"> 변경한 내용');
+          $("#text2").val("변경한 내용");
+          $("#text3").val("변경한 내용");
+        });
+
+        $("#bt5").on("click", () => {
+          // 가져올 때 = $('선택자').attr('속성')
+          console.log($("#img1").attr("src"));
+          // 변경할 때 = $('선택자').attr('속성', '변경할 속성값');
+          $("#img1").attr("src", "../HTML/1.image/file/IMG_2888.jpeg");
+        });
+        $("#bt6").on("click", () => {
+          $("#img1").css("border", "2px solid red");
+          $("#img1").css("background", "red");
+
+          // chaning
+          // jQuery 체이닝은 여러 jQuery 메서드를
+          // 하나의 jQuery 객체에서 연속적으로 호출하는 기법
+          $("#img1").css("width", "500").css("height", "500");
+        });
+        $("addBtn").click(function () {
+          $("p:last").addClass("boxstyle");
+        });
+        $("removeBtn").on({
+          click: () => {
+            $("p:last").removeClass("boxstyle");
+          },
+          mouseover: () => {
+            alert("aa");
+          },
+        });
+      });
+    </script>
+    <style>
+      .boxstyle {
+        color: lightcyan;
+        width: 200px;
+        background-color: gainsboro;
+        font-size: 30px;
+        border: 2px solid lightpink;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>[ 문서 조작 메서드 ]</h1>
+    <pre>
+      html(), text(), val(), attr(), css(), addClass(), removeClass();
+    </pre>
+    <p><input type="button" id="bt1" value="html()함수" /></p>
+    <p><input type="button" id="bt2" value="text()함수" /></p>
+    <p><input type="button" id="bt3" value="val()함수" /></p>
+
+    <h3><b>h3</b>태그를 사용한 문자열1</h3>
+    <h3><i>h3</i>태그를 사용한 문자열2</h3>
+    <p><input type="text" id="text1" /></p>
+    <hr />
+
+    <p><input type="button" value="값 변경" id="bt4" /></p>
+    <div id="div1">aaaa</div>
+    <div id="div2">bbbb</div>
+    <p><input type="text" id="text2" value="input의 기본값" /></p>
+    <p><textarea id="text3" cols="30" rows="10">textarea의 기본값</textarea></p>
+    <hr />
+
+    <p><input type="button" value="attr() 함수" id="bt5" /></p>
+    <p><input type="button" value="css() 함수" id="bt6" /></p>
+    <p>
+      <img
+        src="../HTML/1.image/file/IMG_2884.jpeg"
+        id="img1"
+        style="width: 300px; height: 300px"
+      />
+    </p>
+    <p>마지막 p태그</p>
+    <input type="button" value="addClass" id="addBtn" />
+    <input type="button" value="removeClass" id="removeBtn" />
+  </body>
+</html>

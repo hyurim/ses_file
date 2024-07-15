@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./jq_folder/jquery-3.7.1.js"></script>
+    <script>
+      const testArray1 = () => {
+        // alert("test1Array1 실행");
+        let ar = [10, 20, 30];
+        ar.push(40);
+        console.log(`배열의 첫번째 요소: ${ar[0]}
+        \n 배열크기: ${ar.length}
+        \n 배열전체: ${ar}`);
+      };
+      const testArray2 = () => {
+        let arr = [10, 20, 30];
+        for (let i = 0; i < arr.length; i++) {
+          console.log(`${i}번째 : ${arr[i]}`);
+        }
+        // each 함수
+        // $.each(collection, function(index, value) {
+        // // 작업내용
+        // });
+        // $(collection).each(function(index, value) {
+        // 작업 내용
+        //)}
+        // collection : 배열 or 객체
+        // index : 현재 요소의 인덱스(배열) 또는 키(객체)
+        // value : 현재 요소의 값
+        $.each(arr, (i, num) => {
+          console.log(`${i}번째: ${num}`);
+        });
+        $(arr).each((i, n) => {
+          //function(i, n)
+          console.log(`${i}번째: ${n}`);
+        });
+      };
+      const testEach1 = () => {
+        let score = [20, 50, 20, 90];
+        // score 배열의 모든 요소 합계를 each()를 사용하여 구하시오.
+        let i = 0;
+        $.each(score, (idx, val) => {
+          i += val;
+          console.log(i);
+        });
+        // console.log(score.reduce((a, b) => a + b));
+        // 통일성을 갖출 것.
+      };
+      const testEach2 = () => {
+        let arObject = [
+          { num: 10, name: "aaa", title: "제목1" },
+          { num: 20, name: "bbb", title: "제목2" },
+          { num: 30, name: "ccc", title: "제목3" },
+        ];
+        // console.log(arObject);
+        $.each(arObject, (index, ob) => {
+          console.log(`idx: ${index}, 이름: ${ob.name}, 제목: ${ob.title}`);
+        });
+      };
+      const testMap = () => {
+        // map() 함수 사용
+        // $.map(collection, function(value, index) {
+        // 코드
+        // });
+        // collection : 배열이나 객체
+        // value : 현재 요소의 값
+        // index : 현재 요소의 인덱스(배열) 또는 키(객체)
+        let objList = [
+          { area: "서울", name: "무대리" },
+          { area: "부산", name: "홍과장" },
+          { area: "광주", name: "박사장" },
+          { area: "서울", name: "이사원" },
+        ];
+        let arr = $.map(objList, (value, idx) => {
+          if (value.area == "서울") {
+            return value;
+          }
+        });
+        console.log(arr);
+
+        // $.each vs $.map
+        // $.each 는 반복작업을 수행하고 원본배열이나 객체를 반환
+        // $.map은 각 요소에 대해 작업을 수행한 결과로 새 배열을 반환
+        // 단순한 반복작업을 수행하려면 each()를,
+        // 변환 작업을 통해 새 배열이 필요하다면 map() 사용
+
+        // map()을 이용해서 div 태그에 데이터를 table 형식으로 출력
+        // html() = innerHTML
+        // <tr>
+        //   <th>1. 소프트웨어 설계:</th>
+        //   <td id="text">20문제 중</td>
+        //   <td>
+        //     <input type="text" id="fir" value="0" /> 개
+        //   </td>
+        //   <td>
+        //     <div id="firstResult"></div>
+        //   </td>
+        // </tr>;
+        let table = "";
+        table += "<table>";
+        table += "<tr><th>No</th><th>이름</th><th>지역</th></tr>";
+        let arr2 = $.map(objList, (value, idx) => {
+          table += "<tr>";
+          table += `<td>${idx + 1}</td><td>${value.name}</td><td>${value.area}
+                    </td>`;
+          table += "</tr>";
+        });
+        table += "</table>";
+        $("#result").html(table);
+        $("#result").css("border", "1px solid black");
+      };
+    </script>
+  </head>
+  <body>
+    <h1>[ 배열과 배열관련 메서드 ]</h1>
+    <!-- 간단한 javascript 함수 호출, 짧은 스크립트 실행
+    브라우저의 호환에 따라 실행안될 수도 있음
+    보안에 취약하고 가독성 및 유지보수에 비효율 -->
+    <p><a href="javascript:testArray1()">배열의 사용 1</a></p>
+    <p><a href="javascript:testArray2()">배열의 사용 2</a></p>
+    <p><a href="javascript:testEach1()">each() 사용 1</a></p>
+    <p><a href="javascript:testEach2()">each() 사용 2</a></p>
+    <p><a href="javascript:testMap()">map() 사용 2</a></p>
+    <div id="result"></div>
+  </body>
+</html>
