@@ -5,17 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       $(document).ready(() => {
         $("#button1").on("click", testbutton);
         $("#button2").on("click", testbuttonOff);
         $("#button3").on("click", testbuttonOn);
 
-        $("#text1").on("click", () => {
+        $("text1").on("click", () => {
           alert("#text1의 click 이벤트 발생");
         });
-        $("#text2").on("click", () => {
+        $("text2").on("click", () => {
           // 특정 이벤트를 수동으로 발생시키는 데 사용
           // 대상 객체에 이벤트를 강제 발생시킴
           $("#text1").trigger("click");
@@ -39,7 +38,7 @@
           $(this).css("width", w / 2);
           $(this).css("height", h / 2);
         });
-        $(".bt").on("click", function (event) {
+        $(".bt").on("click", function () {
           console.log(event);
           console.log(event.timeStamp);
           console.log("clicked element: " + event.target.tagName);
@@ -57,19 +56,13 @@
           $("#button1").on("click", testbutton);
         }
 
-        $("#input1, #input2").on("focus", function () {
+        $("#input1, #input2").on("focus", () => {
           $(this).removeClass("inputCss1");
           $(this).addClass("inputCss2");
         });
-        $("#input1, #input2").on("blur", function () {
+        $("#input1, #input2").on("blur", () => {
           $(this).removeClass("inputCss2");
           $(this).addClass("inputCss1");
-        });
-
-        // 키보드를 눌렀다 뗄 때마다 이벤트 처리
-        $("#input3").on("keyup", () => {
-          let n = $("#input3").val().length;
-          $("#cnt").html(n);
         });
       });
     </script>
@@ -189,11 +182,6 @@
         focus, blur 이벤트
         <p><input type="text" id="input1" class="inputCss1" /></p>
         <p><input type="text" id="input2" class="inputCss2" /></p>
-      </li>
-      <li>
-        keyup 이벤트
-        <input type="text" id="input3" />
-        <span id="cnt">0</span>글자
       </li>
     </ol>
   </body>

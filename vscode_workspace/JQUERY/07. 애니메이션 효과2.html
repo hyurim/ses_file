@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07.애니메이션 효과2</title>
+    <script src="./jq_folder/jquery-3.7.1.js"></script>
+    <script>
+        let filename = [
+            "../HTML/1.image/file/home.png",
+            "../HTML/1.image/file/list.png",
+            "../HTML/1.image/file/exit.png"
+        ];
+        let index=0;
+
+        // 이미지 변경 코드 작성 (제이쿼리로)
+        $(document).ready(function() {
+            let img=$('#img').on('click',function() {
+                if(index>=filename.length) {
+                    index=0;
+                }
+                // $(this).attr('src',filename[index]); (기존의 방법)
+                $(this).css('opacity','0').stop()
+                    .attr('src', filename[index]).animate({opacity:1},1000);
+                index++;
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>이미지 변경</h1>
+    <img src="../HTML/1.image/file/home.png" id="img">
+</body>
+</html>

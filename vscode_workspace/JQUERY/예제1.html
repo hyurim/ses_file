@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>예제1(사이트 이동)</title>
+    <script src="../jq_folder/jquery-3.7.1.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('input[type="button"]').on('click',function() {
+                let url=$(this).attr('url');
+                // let url=$(e.target).attr('url');
+                $('#alink').attr('href',url);
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <h1>JQuery 예제1</h1>
+    <input type="button" value="네이버" id="naver" url="https://www.naver.com/">
+    <input type="button" value="네이트" id="nate" url="https://m.nate.com/">
+    <input type="button" value="구글" id="google" url="https://www.google.com/">
+    <br><br>
+    <a id="alink" href="">이동하기</a>
+</body>
+</html>
