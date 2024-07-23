@@ -58,7 +58,7 @@ public class ParamController {
 	
 	@GetMapping("param4")
 	public String param4(Person p) {
-		log.debug("param4 log : person ={}", p);
+		log.debug("param4 log : person = {}", p);
 		return "redirect:/";
 	}
 	@GetMapping("param5")
@@ -82,6 +82,7 @@ public class ParamController {
 		model.addAttribute("str", str);
 		model.addAttribute("num", num);
 		model.addAttribute("person", p);
+		
 		return "param/model";
 	}
 	

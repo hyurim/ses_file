@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- 타임리프를 사용하기 위한 네임스페이스 -->
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>타임리프 문법1</h1>
+	
+	<h4> * 값 출력</h4>
+	<p>[[${str}]]</p>
+	<p>[[${num}]]</p>
+	<p>[[${person}]]</p>
+	<p>[[${person.name}]]</p>
+	<p>[[${tag}]]</p>
+	<p>[[${url}]]</p>
+	
+	<p th:text="${str}"> 테스트 문자열 </p>
+	<p><input type="text" th:value="${str}"></p>
+	<p><span th:text="${num}">0000</span>원</p>
+	
+	<br>
+	<!-- text: HTML을 문자로 출력 / utext: HTML 태그 형태로 출력 -->
+	<h4> * 태그 출력</h4>
+	<p th:text="${tag}"></p>
+	<p th:utext="${tag}"></p>
+	
+	<br>
+	<h4> * 주석</h4>
+	<!-- HTML 주석 -->
+	<script>
+	// 자바스크립트 주석
+	/* 자바스크립트 주석 */
+	</script>
+	<!-- /* 타임리프의 주석 */ -->
+	<!-- /* <p th:text="${str}"></p> */ -->
+	
+	<br>
+	<h4> * 연산자</h4>
+	<p> [[${num gt 0}]]</p>
+	<p th:text="${num}"></p>
+	<!-- 산술연산자: + - * / % -->
+	<p th:text="${num + 1}"></p>
+	<!-- 비교연산자: < > <= >= == != : lt gt le ge eq ne -->
+	<p th:text="${num > 100}"></p>
+	<p th:text="${num gt 100}"></p>
+	<!-- 논리 연산자 : and or not -->
+	<p th:text="${num ge 1 and num le 100}"></p>
+	
+	<br>
+	<h4> * 경로 생성과 하이퍼링크</h4>
+	<p><a href="https://naver.com" th:href="${url}">경로 이동</a></p>
+	<p>절대 경로 생성:[[@{/param/view1}]]</p>
+	<p><a th:href="@{/param/view1}">페이지 이동</a></p>
+	
+	<br>
+	<h4>* 이미지 출력</h4>
+	<p><img th:src="@{/image/ccc.jpg}" alt="불러온 이미지"></p>
+	
+	<br>
+	<h4>* 객체 출력</h4>
+	<ul th:object="${person}">
+		<li th:text="*{name}"></li>
+		<li th:text="${person.phone}"></li>
+	</ul>
+</body>
+</html>
