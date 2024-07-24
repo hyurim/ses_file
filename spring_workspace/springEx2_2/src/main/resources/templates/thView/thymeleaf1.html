@@ -64,5 +64,42 @@
 		<li th:text="*{name}"></li>
 		<li th:text="${person.phone}"></li>
 	</ul>
+	
+	<br>
+	
+	<h4> * 변수 출력</h4>
+	<p th:text="${inum}"></p>
+	<p th:text="${dnum}"></p>
+	<p th:text="${dnum2}"></p>
+	<p th:text="${date}"></p>
+	
+	<br>
+	<h4>* 숫자 포매팅</h4>
+	<p th:text="${#numbers.formatInteger(inum, 10)}"></p>
+	<p th:text="${#numbers.formatInteger(inum, 3, 'COMMA')}"></p>
+	<p th:text="${#numbers.formatDecimal(dnum, 3, 'COMMA', 2, 'POINT')}"></p>
+	<p th:text="${#numbers.formatPercent(dnum2, 0, 2)}"></p>
+	<p th:text="${#numbers.formatPercent(100000.555, 10, 1)}"></p>
+	
+	<br>
+	<h4> * 문자열</h4>
+	<p th:text="${str + 'abcd'}"></p>
+	<p th:text="|${str} abcde fghijklmnop|"></p>
+	
+	<br>
+	<h4>* 조건문</h4>
+	<div th:if="${str.equals('문자열')}">true인 경우 보이는 부분	</div>
+	<div th:if="${not str.equals('문자열')}">false인 경우 보이는 부분	</div>
+	<div th:if="${str == '문자열'}">true인 경우 보이는 부분2</div>
+	<div th:unless="${str == '문자열'}">false인 경우 보이는 부분2</div>
+	
+	<br>
+	<h4>* 선택문</h4>
+	<div th:switch="${num}">
+	<p th:case="100">num은 100입니다.</p>
+	<p th:case="200">num은 200입니다.</p>
+	<p th:case="*">num은 그 밖의 숫자입니다.</p>
+	</div>
+	
 </body>
 </html>
