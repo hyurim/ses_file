@@ -82,11 +82,13 @@ public class MemberServiceImpl implements MemberService{
 			MemberEntity entity = mr.findById(m.getId()).orElseThrow(() -> new EntityNotFoundException("없는 ID"));
 					
 			// MemberDTO의 수정할 정보를 entity에 세팅
-					entity.setName(m.getName());
+			entity.setPw(m.getPw());
+			entity.setName(m.getName());
+			entity.setPhone(m.getPhone());
 			entity.setAddress(m.getAddress());
-			
 			//entity 저장
 			mr.save(entity);
+	        log.debug("업데이트 된 정보 : {}",entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;

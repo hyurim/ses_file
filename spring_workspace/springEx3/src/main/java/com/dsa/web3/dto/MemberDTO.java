@@ -13,6 +13,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+
+/**
+ * 
+ */
 public class MemberDTO {
 	private String id;
 	private String pw;

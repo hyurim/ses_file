@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+ <style>
+#id {
+background-color : lightgray;
+}
+    </style>
+</head>
+<body>
+	<h2>회원 정보 수정</h2>
+	<form th:action="@{/member/update1}" method="post" onsubmit="return check()">
+        <div>
+            <label for="id">id:</label>
+            <input type="text" id="id" name="id" th:value="${member.id}" readonly />
+        </div>
+        <div>
+            <label for="pw">pw:</label>
+            <input type="text" id="pw" name="pw" th:value="${member.pw}" />
+        </div>
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" th:value="${member.name}" />
+        </div>
+        <div>
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" th:value="${member.phone}" />
+        </div>
+        <div>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" th:value="${member.address}" />
+        </div>
+        <button type="submit">Update</button>
+	</form>
+</body>
+</html>
