@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -164,8 +165,98 @@ public class MemberController {
 	@PostMapping("update1")
 	public String update1(@ModelAttribute MemberDTO member) {
 		ms.updateData(member);
+		
 		return "redirect:/";
 	}
+//	@GetMapping("update")
+//	public String update(HttpSession session, Model model) {
+//		String sessionId = (String) session.getAttribute("loginId");
+//		log.debug("현재 세션정보: {}", sessionId);
+//		MemberDTO member = ms.selectData(sessionId);
+//        log.debug("{}",member);
+//        
+//        model.addAttribute("member", member);
+//        
+//		return "member/updateForm";
+//	}
+	/**
+	 * 회원정보 조회
+	 * @return selectForm.html
+	 */
+	@GetMapping("select")
+	public String selectForm() {
+	    return "member/selectForm";
+	}
 	
+	/**
+	 * 회원 아이디가 일치하는지 안하는지 여부 확인 후 출력
+	 * @param id
+	 * @param model
+	 * @return selectResult.html
+	 */
+	@PostMapping("select")
+	public String select(
+			@RequestParam("id") String id, Model model) {
+	    // DB에서 ID로 회원 정보를 가져오기
+	    MemberDTO member = ms.selectData(id);
+	    if (member == null) {	   
+	    	model.addAttribute("id", id);
+	    	return "member/selectResult"; 
+	    }
+    	// 모델에 회원 정보 추가
+	    model.addAttribute("member", member);
+    	return "member/selectResult";
+	}
+
 	
+	/**
+	 * url로부터 들어온 요청을 처리하는 메서드
+	 * http://localhost:9993/web3/member/info/"abc"형식으로 요청
+	 * @param id
+	 * @param model
+	 * @return select.html
+	 */
+	@GetMapping("info" + "/{id}")
+	public String info(
+			// 요청 URL의 일부를 메서드 파라미터로 매핑
+			@PathVariable(name = "id") String id,
+			Model model
+			) {
+		
+		MemberDTO member = ms.selectData(id);
+		
+		model.addAttribute("searchId", id);
+		model.addAttribute("member", member);
+		
+		return "member/selectResult";
+	}
+	
+	/**
+	 * 전체 목록 조회
+	 * @param model
+	 * @return list.html
+	 */
+	@GetMapping("list")
+	public String list(Model model) {
+		List<MemberDTO> member = ms.selectAllData();
+		
+		model.addAttribute("member", member);
+		
+		return "member/list";
+	}
+	/**
+	 * 전체 목록 중에서 데이터 삭제
+	 * @param id
+	 * @return list.html
+	 */
+	@PostMapping("list")
+	public String list(@RequestParam("id") String id) {
+		ms.deleteData(id);
+		return "redirect:/member/list";
+	}
+    @GetMapping("delete")
+    public String delete(@RequestParam("id") String id) {
+        ms.deleteData(id);
+        return "redirect:/member/list";
+    }
 }

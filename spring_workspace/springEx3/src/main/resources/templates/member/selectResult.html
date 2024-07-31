@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>[ ID 조회 ]</h1>
+	<div th:if="${member != null}">
+	<p>ID : [[${member.id}]]</p>
+	<p>이름 : [[${member.name}]]</p>
+	<p>핸드폰 : [[${member.phone}]]</p>
+	</div>
+	<div th:if="${member == null}">
+	<p>[[${id}]] : 없는 회원입니다.</p>
+	</div>
+</body>
+</html>

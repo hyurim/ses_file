@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<style>
+		table {
+			border : 1px solid black;
+			border-collapse: collapse;
+		}
+		th, td {
+			border : 1px solid black;
+			border-collapse: collapse;
+		width: 100px;
+		height: 50px;
+		text-align: center;
+		}
+		th {
+		background-color: beige;
+		}
+</style>
+</head>
+<body>
+	<h1>회원 정보</h1>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>NAME</th>
+			<th>PHONE</th>
+			<th style="width:400px">ADDRESS</th>
+			<th style="width:200px">delete</th>
+		</tr>
+		<tr th:each="list : ${member}">
+			<td th:text="${list.id}"></td>
+			<td th:text="${list.name}"></td>
+			<td th:text="${list.phone}"></td>
+			<td th:text="${list.address}"></td>
+			<td>
+			<!-- 이렇게 할 경우 Get으로 받아야함.-->
+			<button th:onclick = "|location.href='@{delete(id=${list.id})}'|">삭제(get)</button> 
+			<form method="post">
+            	<input type="hidden" name="id" th:value="${list.id}" />
+            	<button type="submit">삭제(post)</button>
+            </form> 
+            </td>
+		</tr>
+	</table>
+</body>
+</html>
