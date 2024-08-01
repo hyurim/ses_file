@@ -154,7 +154,7 @@ public class MemberController {
 		model.addAttribute("member", member);
 		
 		
-		return "member/updateForm1.html";
+		return "member/updateForm1";
 	}
 	
 	/**
@@ -254,6 +254,11 @@ public class MemberController {
 		ms.deleteData(id);
 		return "redirect:/member/list";
 	}
+	/**
+	 * 회원 정보 삭제 처리
+	 * @param id
+	 * @return list.html
+	 */
     @GetMapping("delete")
     public String delete(@RequestParam("id") String id) {
         ms.deleteData(id);

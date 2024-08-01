@@ -19,6 +19,11 @@
 		background-color: beige;
 		}
 </style>
+<script>
+	const deleteFunc = (paramId) => {
+		location.href = 'delete?id=' + paramId
+	}
+</script>
 </head>
 <body>
 	<h1>회원 정보</h1>
@@ -36,12 +41,22 @@
 			<td th:text="${list.phone}"></td>
 			<td th:text="${list.address}"></td>
 			<td>
-			<!-- 이렇게 할 경우 Get으로 받아야함.-->
-			<button th:onclick = "|location.href='@{delete(id=${list.id})}'|">삭제(get)</button> 
-			<form method="post">
-            	<input type="hidden" name="id" th:value="${list.id}" />
-            	<button type="submit">삭제(post)</button>
-            </form> 
+				<!-- GET 요청을 사용한 버튼 -->
+                <button th:onclick="|location.href='@{delete(id=${list.id})}'|">삭제(get)</button>
+                
+                <!-- POST 요청을 사용한 폼 -->
+                <form th:action="@{/delete}" method="post">
+                    <input type="hidden" name="id" th:value="${list.id}" />
+                    <button type="submit">삭제(post)</button>
+                </form>
+                
+                <!-- GET 요청을 사용하는 링크 -->
+                <a th:href="@{/member/delete(id=${list.id})}" th:text="삭제1"></a>
+                <a th:href="|javascript:location.href='delete?id=${list.id}'|" th:text="삭제2"></a>
+                <a th:href="|javascript:deleteFunc('${list.id}')|" th:text="삭제3"></a>
+                
+                <!-- JavaScript 함수를 사용하는 버튼 -->
+                <input type="button" value="삭제4" th:attr="data-id=${list.id}" th:onclick="deleteFunc(this.getAttribute('data-id'))">
             </td>
 		</tr>
 	</table>
