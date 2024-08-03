@@ -1,37 +1,37 @@
-1. COUNT()
-행의 개수를 계산합니다.
+-- 1. COUNT()
+-- 행의 개수를 계산합니다.
 -- 테이블의 전체 행 수를 계산합니다.
 SELECT COUNT(*) FROM employees;
 
 -- 특정 조건을 만족하는 행 수를 계산합니다.
 SELECT COUNT(*) FROM employees WHERE job_title = 'Engineer';
 
-2. SUM()
-숫자 열의 합계를 계산합니다.
+-- 2. SUM()
+-- 숫자 열의 합계를 계산합니다.
 -- 모든 직원의 급여 합계를 계산합니다.
 SELECT SUM(salary) FROM employees;
 
 -- 특정 부서의 급여 합계를 계산합니다.
 SELECT SUM(salary) FROM employees WHERE department_id = 1;
 
-3. AVG()
-숫자 열의 평균을 계산합니다.
+-- 3. AVG()
+-- 숫자 열의 평균을 계산합니다.
 -- 모든 직원의 평균 급여를 계산합니다.
 SELECT AVG(salary) FROM employees;
 
 -- 특정 직책의 평균 급여를 계산합니다.
 SELECT AVG(salary) FROM employees WHERE job_title = 'Engineer';
 
-4. MAX()
-숫자 열의 최대값을 찾습니다.
+-- 4. MAX()
+-- 숫자 열의 최대값을 찾습니다.
 -- 모든 직원의 최고 급여를 찾습니다.
 SELECT MAX(salary) FROM employees;
 
 -- 특정 부서에서 가장 높은 급여를 찾습니다.
 SELECT MAX(salary) FROM employees WHERE department_id = 1;
 
-5. MIN()
-숫자 열의 최소값을 찾습니다.
+-- 5. MIN()
+-- 숫자 열의 최소값을 찾습니다.
 -- 모든 직원의 최저 급여를 찾습니다.
 SELECT MIN(salary) FROM employees;
 
@@ -76,6 +76,17 @@ SELECT job_title, AVG(salary) AS average_salary
 FROM employees
 GROUP BY job_title
 HAVING AVG(salary) >= 60000;
+
+-- 총 계가 null 값이 아닌 '총계'
+use youDB;
+desc box_office;
+
+select * from box_office;
+select if(GROUPING(movie_type) = 1, '총계', movie_type) as '영화 유형', 
+concat(format(round(sum(sale_amt) div pow(10, 8)), 0), '억') as '매출'
+from box_office
+group by movie_type with rollup
+order by sum(sale_amt) desc;
 
 CREATE TABLE employees (
     id INT AUTO_INCREMENT PRIMARY KEY, -- 기본 키는 테이블의 각 행을 고유하게 식별합니다. 행이 삽입될 때마다 자동으로 고유한 숫자 값을 생성합니다.

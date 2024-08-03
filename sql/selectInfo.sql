@@ -117,8 +117,45 @@ WHERE e.salary > 50000 AND e.job_title IN ('Engineer', 'Manager')
 ORDER BY e.salary DESC
 LIMIT 10;
 
+-- CASE 문은 SQL 쿼리에서 조건에 따라 서로 다른 값을 반환할 수 있도록 합니다.
+SELECT 
+    CASE 
+        WHEN condition1 THEN result1
+        WHEN condition2 THEN result2
+        ...
+        ELSE default_result
+    END AS column_name
+FROM table_name;
+SELECT name, salary,
+    CASE 
+        WHEN salary >= 5000 THEN 'High'
+        WHEN salary >= 3000 THEN 'Medium'
+        ELSE 'Low'
+    END AS salary_grade
+FROM employees;
 
 
+-- IF 함수는 단일 조건을 평가하여 두 개의 결과 중 하나를 반환합니다. 이는 MySQL에서 사용됩니다.
+SELECT IF(condition, true_value, false_value) AS column_name;
+SELECT name, salary,
+    IF(salary >= 3000, 'High', 'Low') AS salary_grade
+FROM employees;
 
+-- IFNULL 함수는 첫 번째 인수가 NULL인 경우, 두 번째 인수를 반환합니다.
+SELECT IFNULL(column, default_value) AS column_name;
+SELECT name, IFNULL(email, 'No Email') AS email_status
+FROM employees;
 
+-- CASE 문과 집계 함수 함께 사용
+-- CASE 문은 집계 함수와 함께 사용되어 특정 조건에 따라 값을 집계할 수 있습니다.
+-- 부서별로 고액 연봉자(급여 5000 이상)의 수를 계산하는 예제입니다.
+SELECT department,
+    SUM(CASE WHEN salary >= 5000 THEN 1 ELSE 0 END) AS high_salary_count
+FROM employees
+GROUP BY department;
+
+SELECT department,
+    SUM(IF(salary >= 5000, 1, 0)) AS high_salary_count
+FROM employees
+GROUP BY department;
 
