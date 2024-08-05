@@ -24,7 +24,7 @@ public class MemberEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	// 데이터베이스가 기본 키 값을 자동으로 생성하고, JPA는 그 값을 데이터베이스로부터 가져오는 방식
     @Column(name = "no")
-    private Long no;
+    private Integer no;
 	
 	@Column(name = "id", nullable = false, length = 10, unique = true)
 	private String id;

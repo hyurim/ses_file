@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+		table {
+			border : 1px solid black;
+			border-collapse: collapse;
+		}
+		th, td {
+			border : 1px solid black;
+			border-collapse: collapse;
+		width: 100px;
+		height: 50px;
+		text-align: center;
+		}
+		th {
+		background-color: beige;
+		}
+</style>
+<script>
+const isValid = () => {
+    // 비밀번호 입력 필드와 버튼의 data-password 속성 값 가져오기
+    const inputPassword = document.getElementById('pw').value;
+    const button = document.getElementById('isValid');
+    const storedPassword = button.getAttribute('data-password');
+    console.log(storedPassword);
+
+    // 비밀번호 비교
+    if (inputPassword === storedPassword) {        
+    	document.querySelector("form").submit();
+    } else {
+        alert("비밀번호가 일치하지 않습니다.");
+    }
+}
+</script>
+</head>
+<body>
+	<h2>guestList</h2>
+	<table>
+		<tr>
+			<th>Num</th>
+			<th>name</th>
+			<th style="width:400px">text</th>
+			<th style="width:200px">date</th>
+			<th>password</th>
+			<th style="width:200px">delete</th>
+		</tr>
+		<tr th:each="list : ${guest}">
+			<td th:text="${list.Num}"></td>
+			<td th:text="${list.name}"></td>
+			<td th:text="${list.message}"></td>
+			<td th:text="${list.inputdate}"></td>
+			<td><input type="password" id="pw" placeholder="비밀번호를 입력해주세요"></td>
+			<td>
+				<form th:action="@{/guest/guestlist}" method="post">
+					<!-- <input type="button" value="삭제" id="isValid" onClick="isValid()" data-password="${list.password}"> -->
+					
+        		</form>
+        	</td>
+		</tr>
+	</table>
+</body>
+</html>

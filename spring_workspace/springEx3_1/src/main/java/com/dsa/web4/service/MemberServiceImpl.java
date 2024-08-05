@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.dsa.web4.dto.MemberDTO;
+import com.dsa.web4.entity.MemberEntity;
 import com.dsa.web4.repository.MemberRepository;
 
 import jakarta.transaction.Transactional;
@@ -21,7 +22,8 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void insertData() {
-		// TODO Auto-generated method stub
+		
+//		MemberEntity m = MemberEntity.builder()
 		
 	}
 

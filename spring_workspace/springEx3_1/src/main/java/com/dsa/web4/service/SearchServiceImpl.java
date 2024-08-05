@@ -16,7 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class SearchServiceImpl implements SearchService{@Override
+public class SearchServiceImpl implements SearchService{
+	@Override
 	public void insertSearch() {
 		// TODO Auto-generated method stub
 		

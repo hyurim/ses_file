@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script>
+const isValid = () => {
+	const { id, pw, text } = func();
+    if (idIsValid(id, pw)) {
+        document.querySelector("form").submit();  // 폼 제출
+    }
+}
+
+const func = () => {
+	const id = document.querySelector("#id");
+	const pw = document.querySelector("#pw");
+	const text = document.querySelector("#text");
+	
+	return { id, pw, text };
+}
+
+const idIsValid = (id, pw) => {
+	if (id.value.length < 5) {
+		alert("아이디를 5자 이상으로 작성해주세요.");
+		id.value = "";
+		pw.value = "";
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+	<h2>writeForm</h2>
+	<form th:action="@{/guest/write}" method="post">
+  		<div>
+    		<label>ID</label>
+    		<input type="text" name="id" id="id" placeholder="이름을 입력해주세요">
+  		</div>
+  		<div>
+    		<label>Password</label>
+    		<input type="password" name="pw" id="pw" placeholder="비밀번호를 입력해주세요">
+  		</div>
+		<div>
+  			<label>내용</label>
+		</div>
+		<div>
+  			<textarea name="message" id="message"></textarea>
+		</div>
+  		<input type="button" onClick="isValid()" value="저장">
+	</form>
+</body>
+</html>
