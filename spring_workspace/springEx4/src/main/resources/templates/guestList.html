@@ -2,64 +2,137 @@
 <html xmlns:th="http://thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Guest List</title>
 <style>
-		table {
-			border : 1px solid black;
-			border-collapse: collapse;
-		}
-		th, td {
-			border : 1px solid black;
-			border-collapse: collapse;
-		width: 100px;
-		height: 50px;
-		text-align: center;
-		}
-		th {
-		background-color: beige;
-		}
-</style>
-<script>
-const isValid = () => {
-    // 비밀번호 입력 필드와 버튼의 data-password 속성 값 가져오기
-    const inputPassword = document.getElementById('pw').value;
-    const button = document.getElementById('isValid');
-    const storedPassword = button.getAttribute('data-password');
-    console.log(storedPassword);
+body {
+    background-color: #343a40;
+    color: white;
+    font-family: Arial, sans-serif;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
 
-    // 비밀번호 비교
-    if (inputPassword === storedPassword) {        
-    	document.querySelector("form").submit();
-    } else {
-        alert("비밀번호가 일치하지 않습니다.");
+.container {
+    text-align: center;
+    display: flex;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: #212529;
+    border-radius: 8px;
+    width: 300px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+}
+        .info {
+            margin: 5px 0;
+        }
+        
+        .info-line {
+            display: inline; /* 인라인으로 설정 */
+        }
+
+.content-box {
+    background-color: #6c757d;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.input-field {
+    margin: 10px 0;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+}
+.writeBtn {
+    background-color: #0984e3;
+    color: white;
+    padding: 10px 16px;
+    width: 50px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+.btn {
+    background-color: #0984e3;
+    color: white;
+    padding: 10px 16px;
+    width: 300px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #74b9ff;
+}
+
+</style>
+<script th:inline="javascript">
+
+document.addEventListener('DOMContentLoaded', () => {
+//    const errorMessage = document.getElementById('errorMsg').innerText;
+//    const errorMessage = /*<![CDATA[*/ [[${errorMessage}]] /*]]>*/;
+//    const errorMessage = [[${errorMessage}]];
+    const errorMessage = /*[[${errorMessage}]]*/ '';
+    if (errorMessage) {
+        alert(errorMessage); // 에러 메시지 alert
     }
+});
+const isValid = (button) => {
+    // `button.closest('.card')`를 사용하여 현재 카드 내의 요소를 찾음
+    const password = button.closest('.card').querySelector('.input-field').value;
+    const form = button.closest('form');
+    form.querySelector('.inputPassword').value = password;
+    form.submit();
 }
 </script>
 </head>
 <body>
-	<h2>guestList</h2>
-	<table>
-		<tr>
-			<th>Num</th>
-			<th>name</th>
-			<th style="width:400px">text</th>
-			<th style="width:200px">date</th>
-			<th>password</th>
-			<th style="width:200px">delete</th>
-		</tr>
-		<tr th:each="list : ${guest}">
-			<td th:text="${list.Num}"></td>
-			<td th:text="${list.name}"></td>
-			<td th:text="${list.message}"></td>
-			<td th:text="${list.inputdate}"></td>
-			<td><input type="password" id="pw" placeholder="비밀번호를 입력해주세요"></td>
-			<td>
-				<form th:action="@{/guest/guestlist}" method="post">
-					<!-- <input type="button" value="삭제" id="isValid" onClick="isValid()" data-password="${list.password}"> -->
-					
-        		</form>
-        	</td>
-		</tr>
-	</table>
+	<h1>Guest List</h1>
+	<a th:href="@{/guest/write}" class="writeBtn">글쓰기</a>
+    <div th:each="list : ${guest}" class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="info">
+                    글 번호 : <span th:text="${list.Num}" class="info-line"></span>
+                    작성자 : <span th:text="${list.name}" class="info-line"></span>
+                </div>
+                <div>
+                작성일 : <span th:text="${list.inputdate}" class="info-line"></span>
+                </div>
+                <div class="content-box">
+                    <p th:text="${list.message}">내용</p>
+                </div>
+                <input type="password" placeholder="비밀번호를 입력해주세요" class="input-field">
+                <form th:action="@{/guest/delete}" method="post">
+                    <input type="hidden" name="num" th:value="${list.Num}" />
+                    <input type="hidden" name="password" class="inputPassword"/>
+                    <button type="button" class="btn" onClick="isValid(this);">
+                        삭제
+                    </button>
+                </form>
+            </div>
+			<!-- <div th:if="${errorMessage}" th:text="${errorMessage}" style="display: none;" id="errorMsg"></div> -->
+        </div>
+    </div>
 </body>
+
 </html>

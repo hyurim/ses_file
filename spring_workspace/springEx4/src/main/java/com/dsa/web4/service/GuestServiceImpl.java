@@ -33,14 +33,17 @@ public class GuestServiceImpl implements GuestService {
 	}
 	
 	@Override
-	public boolean deleteData(String num) {
-		
-		boolean result = gr.existsById(Integer.parseInt(num));
-		
-		if(result) {
-			gr.deleteById(Integer.parseInt(num));
-		}
-		return false;
+	public boolean deleteData(String num, String password) {
+		int guestNum = Integer.parseInt(num);
+		boolean result = gr.existsById(guestNum);
+		GuestBookEntity guest = gr.findByNum(guestNum);
+        if (result && guest != null && guest.getPassword().equals(password)) {
+            gr.deleteById(guestNum);
+
+            return true;
+        }
+
+        return false;
 		
 	}
 	
@@ -63,4 +66,5 @@ public class GuestServiceImpl implements GuestService {
 		return dtoList;
 		
 	}
+
 }
