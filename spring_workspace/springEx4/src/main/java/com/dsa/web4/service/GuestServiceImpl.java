@@ -22,14 +22,24 @@ public class GuestServiceImpl implements GuestService {
 	private final GuestBookRepository gr;
 
 	@Override
-	public void insertData(String id, String pw, String message) {
-		GuestBookEntity g = GuestBookEntity.builder()
-				.name(id)
-				.password(pw)
-				.message(message)
-				.build();
-		
-		gr.save(g);
+	public void insertData(
+//			String id, 
+//			String pw, 
+//			String message,
+			GuestBookDTO guestbook
+			) {
+//		GuestBookEntity g = GuestBookEntity.builder()
+//				.name(id)
+//				.password(pw)
+//				.message(message)
+//				.build();
+		GuestBookEntity entity = GuestBookEntity.builder()
+				 .name(guestbook.getName())
+				 .password(guestbook.getPassword())
+				 .message(guestbook.getMessage())
+				 .build();
+//		gr.save(g);
+		gr.save(entity);
 	}
 	
 	@Override

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,16 +35,18 @@ public class GuestController {
 
 	@PostMapping("guestlist")
 	public String writeForm(
-	        @RequestParam(name = "id") String id,
-	        @RequestParam(name = "pw") String pw,
-	        @RequestParam(name = "message") String message,
+//	        @RequestParam(name = "id") String id,
+//	        @RequestParam(name = "pw") String pw,
+//	        @RequestParam(name = "message") String message,
+			@ModelAttribute GuestBookDTO guestbook,
 	        HttpSession session
 	        ) {
-	    log.debug("ID: {}", id);
-	    log.debug("Password: {}", pw);
-	    log.debug("Message: {}", message);
+//	    log.debug("ID: {}", id);
+//	    log.debug("Password: {}", pw);
+//	    log.debug("Message: {}", message);
 	    
-	    gs.insertData(id, pw, message);
+//	    gs.insertData(id, pw, message);
+	    gs.insertData(guestbook);
 	    return "redirect:/guest/guestlist";
 	}
 	
@@ -70,13 +73,12 @@ public class GuestController {
 		 */
 		boolean isDeleted = gs.deleteData(num, password);
 		
-		if (isDeleted) {
-			redirectAttributes.addFlashAttribute("successMessage", "삭제가 완료되었습니다.");
-        } else {
+		if (!isDeleted) {
             // 비밀번호가 일치하지 않으면 에러 메시지 설정
             redirectAttributes.addFlashAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
              // 에러 발생 시 원래 페이지로 리다이렉트
             }
 		return "redirect:/guest/guestlist";
+		// 
 	}
 }

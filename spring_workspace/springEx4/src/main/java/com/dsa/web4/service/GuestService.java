@@ -5,7 +5,8 @@ import java.util.List;
 import com.dsa.web4.dto.GuestBookDTO;
 	
 public interface GuestService {
-	void insertData(String id, String pw, String message);
+//	void insertData(String id, String pw, String message);
+	void insertData(GuestBookDTO guestbook);
 	
 	boolean deleteData(String num, String password);
 		
