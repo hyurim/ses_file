@@ -28,7 +28,7 @@ public class GuestController {
 	 * @return 글 작성 폼이 포함된 HTML 파일 경로
 	 */
 	@GetMapping("write")
-	public String writeForm() {
+	public String writeForm() {	
 		return "writeForm";
 	}
 	
