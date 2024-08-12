@@ -7,5 +7,8 @@ public interface MemberService {
 	boolean idCheck(String searchId);
 
 	void insertData(MemberDTO member);
+	
+	MemberDTO selectData(String id);
 
+	void updateData(MemberDTO member);
 }

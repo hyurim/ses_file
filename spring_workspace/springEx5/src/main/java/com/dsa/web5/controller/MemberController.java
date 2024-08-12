@@ -1,5 +1,6 @@
 package com.dsa.web5.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dsa.web5.dto.MemberDTO;
+import com.dsa.web5.security.AuthenticatedUser;
 import com.dsa.web5.service.MemberService;
 
 import jakarta.servlet.http.HttpSession;
@@ -71,8 +73,41 @@ public class MemberController {
 	 */
 	@GetMapping("loginForm")
 	public String loginForm() {
+		
 		return "member/loginForm";
 	}
 	
+	/**
+	 * 개인정보 수정 폼으로 이동
+	 * @param user 로그인한 사용자
+	 * @param model
+	 * @return infoForm.html로 이동
+	 */
+	@GetMapping("info")
+	public String info(@AuthenticationPrincipal AuthenticatedUser user, Model model) {
+
+		log.debug("현재 접속중인 유저의 ID : {}", user.getUsername());
+		
+		// 현재 로그인한 ID가 존재하는지 조회
+		MemberDTO member = ms.selectData(user.getUsername());
+		
+		// 로그인한 정보를 infoForm으로 데이터를 전송
+		model.addAttribute("member", member);
+		
+		return "member/infoForm";
+	}
+	
+	/**
+	 * 수정한 정보로 업데이트
+	 * @param member
+	 * @return home으로 이동
+	 */
+	@PostMapping("info")
+	public String info(@ModelAttribute MemberDTO member) {
+		// 수정한 데이터를 updataData로 전송
+		ms.updateData(member);
+		
+		return "redirect:/";
+	}
 	
 }

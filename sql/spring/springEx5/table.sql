@@ -2,7 +2,7 @@
 
 use springjpa;
 show tables;
-
+insert into web5_member (member_id, member_password, member_name, email, phone, address) value ("abcde", "11111111", "가나다", "kyo2301@naver.com", "01012345678", "인천");
 select * from web5_member;
 
 create table web5_member (
