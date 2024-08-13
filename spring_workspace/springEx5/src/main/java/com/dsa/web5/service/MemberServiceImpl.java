@@ -75,6 +75,7 @@ public class MemberServiceImpl implements MemberService {
 				.address(member.getAddress())
 				.build();
 		
+		
 		return memberDTO;
 	}
 

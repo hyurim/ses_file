@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/main.css}">
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+</head>
+<body>
+	<header>
+		<h1>[ 게시판 - 전체 목록 ]</h1>
+	</header>
+	<section>
+	<div id = linkbutton>
+	<a href="write">글쓰기</a>
+	<a href="/web5">HOME</a>
+	</div>
+		<table>
+			<tr>
+				<th>번호</th>
+				<th style = "width:300px;">제목</th>
+				<th>작성자</th>
+				<th>조회수</th>
+				<th>작성일</th>
+			</tr>
+			<tr th:each="list : ${board}">
+				<td th:text="${list.boardNum}"></td>
+				<td th:text="${list.title}"></td>
+				<td th:text="${list.memberName}"></td>
+				<td th:text="${list.viewCount}"></td>
+				<td th:text="${list.createDate}"></td>
+			</tr>
+		</table>
+	</section>
+</body>
+</html>

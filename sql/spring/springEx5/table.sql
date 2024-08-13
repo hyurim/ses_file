@@ -1,9 +1,16 @@
 -- drop table guestbook13;
 
 use springjpa;
+describe web5_member;
+describe web5_board;
+describe web5_reply;
 show tables;
+select * from web5_member;
+select * from web5_board;
+select * from web5_reply;
 insert into web5_member (member_id, member_password, member_name, email, phone, address) value ("abcde", "11111111", "가나다", "kyo2301@naver.com", "01012345678", "인천");
 select * from web5_member;
+
 
 create table web5_member (
 	 member_id varchar(30) primary key,          -- 회원을 구분하는 아이디
@@ -31,6 +38,7 @@ create table web5_board (
     constraint foreign key (member_id) 
     			references web5_member (member_id) on delete set null
 );
+select * from web5_board;
 -- 게시판 리플 테이블 (web5_reply)
 create table web5_reply (
                             reply_num int auto_increment primary key,    -- 리플 일련번호
@@ -41,3 +49,4 @@ create table web5_reply (
                             constraint foreign key (board_num) references web5_board (board_num) on delete cascade,
                             constraint foreign key (member_id) references web5_member (member_id) on delete set null
 );
+
