@@ -2,20 +2,24 @@
 <html xmlns:th="http://thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시글 목록 (페이징X)</title>
 <link rel="stylesheet" th:href="@{/css/main.css}">
 <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 </head>
 <body>
 	<header>
-		<h1>[ 게시판 - 전체 목록 ]</h1>
+		<h1><a th:href="@{/board/listAll}">[ 게시판 - 전체 목록 ]</a></h1>
 	</header>
 	<section>
-	<div id = linkbutton>
-	<a href="write">글쓰기</a>
-	<a href="/web5">HOME</a>
-	</div>
 		<table>
+			<tr>
+				<td class="white" colspan="4"></td>
+				<td class="head">
+					<a sec:authorize="isAuthenticated()"
+					th:href="@{/board/write}">글쓰기</a>
+					<a th:href="@{/}">HOME</a>
+				</td>	
+			</tr>
 			<tr>
 				<th>번호</th>
 				<th style = "width:300px;">제목</th>
@@ -24,11 +28,12 @@
 				<th>작성일</th>
 			</tr>
 			<tr th:each="list : ${board}">
-				<td th:text="${list.boardNum}"></td>
-				<td th:text="${list.title}"></td>
-				<td th:text="${list.memberName}"></td>
-				<td th:text="${list.viewCount}"></td>
-				<td th:text="${list.createDate}"></td>
+				<td th:text="${list.boardNum}" class="center"></td>
+				<td><a th:text="${list.title}"
+					th:href="@{/board/read(boardNum=${list.boardNum})}"></a></td>
+				<td th:text="${list.memberName}"class="center"></td>
+				<td th:text="${list.viewCount}"class="center"></td>
+				<td th:text="${#temporals.format(list.createDate, 'yy.MM.dd HH:mm')}"></td>
 			</tr>
 		</table>
 	</section>

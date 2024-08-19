@@ -62,13 +62,17 @@ public class BoardController {
 	      
 	      try {
 	         boardService.write(boardDTO, uploadPath, upload);
-	         return "redirect:/";
+	         return "redirect:/board/listAll";
 	      } catch(Exception e) {
 	         e.printStackTrace();
 	         return "board/writeForm";
 	      }
 	   }
-	
+	/**
+	 * 게시글 전체 글 목록, 페이징X
+	 * @param model
+	 * @return listAll.html
+	 */
 	   @GetMapping("listAll")
 	   public String listAll(Model model) {
 		   
@@ -79,5 +83,24 @@ public class BoardController {
 	   	return "board/listAll";
 	   }
 	   
-	
+	   /**
+	    * 게시글 상세보기
+	    * @param Model
+	    * @param boardNum 조회할 글 번호
+	    * @retusn read.html
+	    */
+	   @GetMapping("read")
+	   public String read(Model model, @RequestParam(name = "boardNum", defaultValue = "0") int boardNum) {
+		   log.debug("boardNum: {} ", boardNum);
+		   try {
+			   BoardDTO boardDTO = boardService.getBoard(boardNum);
+			   model.addAttribute("board", boardDTO);
+		         return "board/read";
+		         
+		      } catch(Exception e) {
+		         e.printStackTrace();
+		         return "board/listAll";
+		      }
+	   }
+	   
 }
