@@ -10,6 +10,16 @@
 	const deleteFunc = (paramId) => {
 		location.href = 'delete?id=' + paramId
 	}
+	$(document).ready(() => {
+	    $('#likeButton').click(function() { // ID 대소문자 주의
+	        let boardNum = $(this).data('num');
+	        location.href = 'like?boardNum=' + boardNum;
+	    });
+	    $('#updateButton').click(function() {
+	    	let boardNum = $(this).data('num');
+	    	location.href = 'update?boardNum=' + boardNum;
+	    });
+	});
 </script>
 </head>
 <body>
@@ -55,7 +65,7 @@
         		</td>
     		</tr>
 		</table>
-		<div th:if="${#outhenticaion.name == board.memberId}">
+		<div th:if="${#authentication.name == board.memberId}">
 		<button id ="likeButton" 	th:data-num="${board.boardNum}">추천</button>
 		<button id ="updateButton" 	th:data-num="${board.boardNum}">수정</button>
 		<button id ="deleteButton" 	th:data-num="${board.boardNum}">삭제</button>

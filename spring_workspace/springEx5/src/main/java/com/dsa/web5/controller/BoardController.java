@@ -17,6 +17,7 @@ import com.dsa.web5.dto.BoardDTO;
 import com.dsa.web5.security.AuthenticatedUser;
 import com.dsa.web5.service.BoardService;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -101,6 +102,64 @@ public class BoardController {
 		         e.printStackTrace();
 		         return "board/listAll";
 		      }
+	   }
+	   
+	   /**
+	    * 첨부파일 다운로드
+	    * @param boardNum 글번호
+	    * @return response 응답 정보
+	    */
+	   @GetMapping("download")
+	   public void download(@RequestParam("boardNum") Integer boardNum, HttpServletResponse response) {
+		   log.debug("download 실행");
+	   	boardService.download(boardNum, response, uploadPath);
+	   }
+	   
+	   /**
+	    * 추천 수 증가
+	    * @param boardNum
+	    * @return
+	    */
+	   @GetMapping("like")
+	   public String like(@RequestParam("boardNum") Integer boardNum) {
+		   System.out.println("Received boardNum: " + boardNum);
+		   try {
+		   boardService.likeplus(boardNum);
+		   	return "redirect:read?boardNum=" + boardNum;
+		   } catch (Exception e) {
+			   return "redirect:listAll";
+			   }
+		   }
+	   /**
+	    * 게시글 수정 폼으로 이동
+	    * @param boardNum 수정할 글 번호
+	    * @param user 로그인한 사용자 정보
+	    * @param model
+	    * @return updateForm.html
+	    */
+	   @GetMapping("update")
+	   public String update(@RequestParam("boardNum") Integer boardNum, 
+			   @AuthenticationPrincipal AuthenticatedUser user, 
+			   Model model) {
+		   try {
+			   BoardDTO boardDTO = boardService.selectBoard(boardNum);
+			   if(!user.getUsername().equals(boardDTO.getMemberId())) {
+				   throw new RuntimeException("수정권한이 없습니다.");
+			   }
+			   model.addAttribute("board", boardDTO);
+		   	return "board/updateForm";
+		   } catch (Exception e) {
+			   e.printStackTrace();
+			   return "redirect:listAll";
+			   }
+		   }
+	   
+	   @PostMapping("update")
+	   public String update(@RequestParam("boardNum") Integer boardNum, 
+		         @ModelAttribute BoardDTO board,
+		         @RequestParam(name = "upload", required = false) MultipartFile upload) {
+		   boardService.updateBoard(board, uploadPath, upload);
+		   return "redirect:read?boardNum=" + boardNum;
 	   }
 	   
 }
