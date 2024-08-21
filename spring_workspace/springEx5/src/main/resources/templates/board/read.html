@@ -11,13 +11,19 @@
 		location.href = 'delete?id=' + paramId
 	}
 	$(document).ready(() => {
-	    $('#likeButton').click(function() { // ID 대소문자 주의
+	    $('#likeButton').click(function() {
 	        let boardNum = $(this).data('num');
 	        location.href = 'like?boardNum=' + boardNum;
 	    });
 	    $('#updateButton').click(function() {
 	    	let boardNum = $(this).data('num');
 	    	location.href = 'update?boardNum=' + boardNum;
+	    });
+	    $('#deleteButton').click(function() {
+	    	if(confirm("삭제하시겠습니까?")){
+		    	let boardNum = $(this).data('num');
+		    	location.href = 'delete?boardNum=' + boardNum;
+	    	}
 	    });
 	});
 </script>
@@ -81,6 +87,31 @@
         	<!-- JavaScript 함수를 사용하는 버튼 -->
             <input type="button" value="삭제" th:attr="data-id=${board.boardNum}" th:onclick="deleteFunc(this.getAttribute('data-id'))">
         </div>
+        <br />
+        <!-- 리플 작성 폼 -->
+        <div sec:auhorize="isAuthenticatd()">
+        	<form th:action="@{/board/replyWrite}" method="post">
+        		<input type="hidden" name="boardNum" th:value="${board.boardNum}">
+        		<input type="text" name="contents" id="replyContents"
+        		style="width:500px;">
+        		<input type="submit" value="작성">        		
+        	</form>
+        </div>
+        <!-- 리플 목록 출력 -->
+		<table class="reply">
+		    <tr th:each="reply : ${board.replyList}">
+	    	    <td class="replyid" th:text="${reply.memberId}"></td>
+        		<td class="replytext" th:text="${reply.contents}"></td>
+        		<td class="replydate" th:text="${#temporals.format(reply.createDate, 'yy.MM.dd HH:mm')}"></td>
+        		<td class="white">
+		            <span th:if="${#authentication.name} == ${reply.memberId}">
+	    	            <a th:href="@{replyDelete(replyNum=${reply.replyNum}, boardNum=${reply.boardNum})}">
+                    		<img th:src="@{/images/icon_delete.png}" alt="삭제">
+                		</a>
+            		</span>
+        		</td>
+    		</tr>
+		</table>
 	</section>
 </body>
 </html>

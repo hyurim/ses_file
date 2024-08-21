@@ -10,6 +10,7 @@
 $(document).ready(() => {
 	$('#updateForm').submit((event) => {
 		let boardNum = $('#boardNum').val();
+		let file = $('#boardNum').val();
 		if (!validation()) {
             event.preventDefault(); // 폼 제출을 막음
         }
@@ -41,9 +42,6 @@ const validation = () => {
 		<h1>[ 게시글 수정 ]</h1>
 	</header>
 	<section>
-	<div th:text="${board}">
-	
-	</div>
 		<form id="updateForm" th:action="@{/board/update}" method="post"
 		 enctype="multipart/form-data">
 		  <input type="hidden" id="boardNum" name="boardNum" th:value="${board.boardNum}">

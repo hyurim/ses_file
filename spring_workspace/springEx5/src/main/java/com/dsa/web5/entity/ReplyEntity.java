@@ -2,6 +2,7 @@ package com.dsa.web5.entity;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
@@ -45,6 +46,7 @@ public class ReplyEntity {
 	@Column(name = "contents", nullable = false, length = 2000)
 	private String contents;
 	
+	@CreatedDate
 	@Column(name = "create_date", columnDefinition = "timestamp default current_timestamp")
 	private LocalDateTime createDate;
 	

@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dsa.web5.dto.BoardDTO;
+import com.dsa.web5.dto.ReplyDTO;
 import com.dsa.web5.security.AuthenticatedUser;
 import com.dsa.web5.service.BoardService;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 
 
 @Controller
@@ -154,12 +156,82 @@ public class BoardController {
 			   }
 		   }
 	   
+	   /**
+	    * 게시글 수정처리
+	    * @param user 로그인한 사용자 정보
+	    * @param board
+	    * @param upload 
+	    * @return read.html
+	    */
 	   @PostMapping("update")
-	   public String update(@RequestParam("boardNum") Integer boardNum, 
+	   public String update( 
+			   @AuthenticationPrincipal AuthenticatedUser user, 
 		         @ModelAttribute BoardDTO board,
 		         @RequestParam(name = "upload", required = false) MultipartFile upload) {
-		   boardService.updateBoard(board, uploadPath, upload);
-		   return "redirect:read?boardNum=" + boardNum;
+		   try {
+			   boardService.updateBoard(board, user.getId(), uploadPath, upload);
+			   return "redirect:read?boardNum=" + board.getBoardNum();
+			   } catch (Exception e) {
+				   e.printStackTrace();
+				   return "redirect:listAll";
+				   }
+		   }
+	   
+	   /**
+	    * 게시글 삭제
+	    * @param boardNum	게시글 번호
+	    * @param user		유저
+	    * @return
+	    */
+	   @GetMapping("delete")
+	   public String delete(
+			   @RequestParam("boardNum") Integer boardNum, 
+			   @AuthenticationPrincipal AuthenticatedUser user) {
+		   try {
+			   boardService.deleteBoard(boardNum, uploadPath, user.getId());
+			   return "redirect:listAll";
+			   } catch (Exception e) {
+				   e.printStackTrace();
+				   return "redirect:listAll";
+				   }
+		   }
+	   
+	   /**
+	    * 리플 작성
+	    * @param replyDTO	저장할 리플 정보
+	    * @param user 로그인한 사용자 아이디
+	    * @param model 
+	    * @return read.html
+	    */
+	   @PostMapping("replyWrite")
+	   public String replyWrite(@ModelAttribute ReplyDTO replyDTO
+			   , @AuthenticationPrincipal AuthenticatedUser user,
+			   Model model) {
+	   	replyDTO.setMemberId(user.getUsername()); // 리플 작성자 정보 추가
+	   	boardService.replyWrite(replyDTO);
+	   	return "redirect:read?boardNum=" + replyDTO.getBoardNum();
 	   }
+	   
+	   /**
+	    * 리플 삭제
+	    * @param replyNum 댓글 번호
+	    * @param boardNum 게시글 번호
+	    * @return read.html
+	    */
+	   @GetMapping("replyDelete")
+	   public String replyDelete(
+			   @RequestParam("replyNum") Integer replyNum
+			   , @AuthenticationPrincipal AuthenticatedUser user
+			   , @RequestParam("boardNum") Integer boardNum) {
+		   try {
+			   boardService.replydelete(replyNum, user.getId());
+			   return "redirect:read?boardNum=" + boardNum;
+			   } catch (Exception e) { // 문제 발생
+				   e.printStackTrace();
+				   return "redirect:listAll";
+				   }
+		   
+	   }
+	   
 	   
 }

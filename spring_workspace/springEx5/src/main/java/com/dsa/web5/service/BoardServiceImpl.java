@@ -12,10 +12,14 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dsa.web5.dto.BoardDTO;
+import com.dsa.web5.dto.ReplyDTO;
 import com.dsa.web5.entity.BoardEntity;
 import com.dsa.web5.entity.MemberEntity;
+import com.dsa.web5.entity.ReplyEntity;
 import com.dsa.web5.repository.BoardRepository;
 import com.dsa.web5.repository.MemberRepository;
+import com.dsa.web5.repository.ReplyRepository;
+import com.dsa.web5.security.AuthenticatedUser;
 import com.dsa.web5.util.FileManager;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -32,6 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardServiceImpl implements BoardService {
 	private final BoardRepository boardRepository;
 	private final MemberRepository memberRepository; 
+	private final ReplyRepository replyRepository;
 	private final FileManager fileManager;
 	
 	@Override
@@ -103,11 +108,25 @@ public class BoardServiceImpl implements BoardService {
 		board.setViewCount(updateViewCount);
 		boardRepository.save(board);
 
+		// 존재한다면 entity의 정보를 dto에 옮겨 담기
 		BoardDTO dto = convertDTO(board);
+		
+		// 리플 정보 가져오기
+		List<ReplyDTO> replyDTOList = new ArrayList<ReplyDTO>();
+		for (ReplyEntity replyEntity : board.getReplyList()) {
+			ReplyDTO replyDTO = convertToReplyDTO(replyEntity);
+			replyDTOList.add(replyDTO);
+		}
+		dto.setReplyList(replyDTOList);
 		
 		// dto 리턴
 		return dto;
 	}
+		/**
+		 * 
+		 * @param board
+		 * @return
+		 */
 		private BoardDTO convertDTO(BoardEntity board) {
 			return BoardDTO.builder()
 					.boardNum(board.getBoardNum())
@@ -124,6 +143,23 @@ public class BoardServiceImpl implements BoardService {
 					.build();
 			
 		}
+
+		/**
+		 * ReplyEntity 객체를 ReplyDTO 객체로 변환
+		 * @param replyEntity 	리플 정보 Entitiy 객체
+		 * @return dto			리플 정보
+		 */
+			private ReplyDTO convertToReplyDTO(ReplyEntity entity) {
+			return ReplyDTO.builder()
+					.replyNum(entity.getReplyNum())
+					.boardNum(entity.getReplyNum())
+					.memberId(entity.getMember().getMemberId())
+					.memberName(entity.getMember().getMemberName())
+					.contents(entity.getContents())
+					.createDate(entity.getCreateDate())
+					.build();
+		}
+		
 		/**
 		 * 파일 다운로드
 		 * @param boardNum 글번호
@@ -184,6 +220,10 @@ public class BoardServiceImpl implements BoardService {
 			}
 		}
 
+		/**
+		 * 추천 수 처리
+		 * @param boardNum 
+		 */
 		@Override
 		public void likeplus(Integer boardNum) {
 			// 전달된 글 번호로 글 정보 조회
@@ -192,7 +232,6 @@ public class BoardServiceImpl implements BoardService {
 					new EntityNotFoundException("해당 번호의 글이 없습니다."));
 			
 			board.setLikeCount(board.getLikeCount() + 1);
-//			boardRepository.save(board);
 		}
 
 		@Override
@@ -207,32 +246,96 @@ public class BoardServiceImpl implements BoardService {
 		}
 
 		@Override
-		public void updateBoard(BoardDTO b, String uploadPath, MultipartFile upload) {
+		public void updateBoard(BoardDTO b, String user, String uploadPath, MultipartFile upload) throws Exception {
 			BoardEntity board = boardRepository.findById(b.getBoardNum())
 					.orElseThrow(() -> 
 					new EntityNotFoundException("해당 번호의 글이 없습니다."));
 			
+			if (!board.getMemberId().getMemberId().equals(user)) {
+				throw new RuntimeException("수정권한이 없습니다.");
+			}
+			// 전달된 정보 수정
 			board.setTitle(b.getTitle());
 			board.setContents(b.getContents());
 			
 		    // 첨부파일이 있는 경우 처리
 		    if (upload != null && !upload.isEmpty()) {
-		        String fileName = fileManager.saveFile(uploadPath, upload);  // 파일 저장 후 파일명 반환
-		        board.setFileName(fileName);                                // 저장된 파일명 설정
-		        board.setOriginalName(upload.getOriginalFilename());        // 원본 파일명 저장
-		    } else if (b.getOriginalName() != null) {
-		        // 파일 첨부가 없는 경우 원본 파일명을 유지
+		    	if(board.getFileName() != null) {
+		    		fileManager.deleteFile(uploadPath, board.getFileName());
+		    	}
+		        String fileName = fileManager.saveFile(uploadPath, upload);		// 파일 저장 후 파일명 반환
+			    board.setFileName(fileName);                                // 저장된 파일명 설정
+			    board.setOriginalName(upload.getOriginalFilename());        // 원본 파일명 저장
+		    } else {
+		    	if (board.getFileName() != null) {
+		    		fileManager.deleteFile(uploadPath, board.getFileName());
+		    	}
 		        board.setOriginalName(b.getOriginalName());
 		        board.setFileName(b.getFileName());
 		    }
-		    
-			System.out.println("수정된 내용5");
-			System.out.println(board);
-			System.out.println(b);
-			System.out.println(upload);
-			System.out.println(uploadPath);
+
 			
+		}
+
+		/**
+		 * 게시글 삭제
+		 * @param boardNum 삭제할 글 번호
+		 * @param uploadPath 첨부파일이 존재하는 디렉토리 경로
+		 * @param user 로그인 중인 아이디
+		 * @throws Exception 
+		 */
+		@Override
+		public void deleteBoard(Integer boardNum, String uploadPath, String user) throws Exception {
+			BoardEntity board = boardRepository.findById(boardNum)
+					.orElseThrow(() -> 
+					new EntityNotFoundException("해당 번호의 글이 없습니다."));
 			
+			if (!board.getMemberId().getMemberId().equals(user)) {
+				throw new RuntimeException("삭제권한이 없습니다.");
+			}
+			if (board.getFileName() != null) {
+				fileManager.deleteFile(uploadPath, board.getFileName());
+			}
+			boardRepository.delete(board);
+		}
+
+		/**
+		 * 리플 저장
+		 * @param replyDTO 작성한 리플 정보
+		 * @throws EntityNotFoundException
+		 */
+		@Override
+		public void replyWrite(ReplyDTO replyDTO) {
+			// 회원 정보를 DB로부터 조회 및 가져오기
+			MemberEntity member = memberRepository.findById(replyDTO.getMemberId())
+					.orElseThrow(() -> 
+			new EntityNotFoundException("해당 아이디가 없습니다."));
+			// 글 정보를 DB로부터 조회 및 가져오기
+			BoardEntity board = boardRepository.findById(replyDTO.getBoardNum())
+					.orElseThrow(() -> 
+			new EntityNotFoundException("해당 번호의 글이 없습니다."));
+			
+			// ReplyEntity에 위의 데이터 집어넣기
+			ReplyEntity reply = ReplyEntity.builder()
+					.board(board)
+					.member(member)
+					.contents(replyDTO.getContents())
+					.build();
+			
+			// Jpa 메서드를 통해 DB에 저장하기
+		    replyRepository.save(reply);
+		}
+
+		@Override
+		public void replydelete(Integer replyNum, String user) {
+			ReplyEntity reply = replyRepository.findById(replyNum)
+					.orElseThrow(() -> 
+					new EntityNotFoundException("해당 번호의 글이 없습니다."));
+					
+			if (!reply.getMember().getMemberId().equals(user)) {
+				throw new RuntimeException("삭제권한이 없습니다.");
+			}
+			replyRepository.delete(reply);
 		}
 		
 		

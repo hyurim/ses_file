@@ -134,5 +134,6 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return dtoList;
 	}
+
 	
 }
