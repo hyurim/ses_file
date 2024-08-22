@@ -3,6 +3,7 @@ package com.dsa.web5.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +36,12 @@ public class BoardController {
 	// application.properties 파일의 게시판 관련 설정값 board.uploadPath 값이 경로가 됨.
 	@Value("${board.uploadPath}") 
 	String uploadPath;
+	
+    @Value("${page.size:10}")
+    private int pageSize;
+
+    @Value("${link.size:5}")
+    private int linkSize;
 	
 	/**
 	 * 
@@ -70,6 +77,47 @@ public class BoardController {
 	         e.printStackTrace();
 	         return "board/writeForm";
 	      }
+	   }
+	   
+	   /**
+	    * 게시판 전체 글 목록, 페이징 O
+	    * @param model	
+	    * @param page			현재 페이지(default: 1)
+	    * @param searchType		검색 대상(default: "")
+	    * @param searchWord		검색어(default: "")
+	    */
+	   
+	   @GetMapping("list")
+	   public String list(Model model,
+			   @RequestParam(name="page", defaultValue="1") int page,
+			   @RequestParam(name="searchType", defaultValue="") String searchType,
+			   @RequestParam(name="searchWord", defaultValue="") String searchWord) {
+		   log.debug("properties 값 : pagesize={}, linkSize={} uploadPath ={} ", pageSize, linkSize, uploadPath);
+		   log.debug("요청 파라미터 : page = {}, searchType ={}, searchWord= {}", page, searchType, searchWord);
+		   
+		   // Page, Pageable : Spring Data JPA에서 페이징과 관련된 작업을
+		   //					간편하게 처리하기 위한 클래스 및 인터페이스
+		   // 현재 페이지, 페이지당 글 수, 검색 대상, 검색어
+		   Page<BoardDTO> boardPage = boardService.getList(
+				   page, pageSize, searchType, searchWord
+				   );
+		   
+		   log.debug("목록 정보 getContent(): {}", boardPage.getContent());
+		   log.debug("현재 페이지 getNumber(): {}", boardPage.getNumber());
+		   log.debug("전체 개수 getTotalElement(): {}", boardPage.getTotalElements());
+		   log.debug("전체 페이지 getTotalPage(): {}", boardPage.getTotalPages());
+		   log.debug("한 페이지당 글 수 getSize(): {}", boardPage.getSize());
+		   log.debug("이전 페이지 존재 여부 hasPrevious(): {}", boardPage.hasPrevious());
+		   log.debug("다음 페이지 존재 여부 hasNext(): {}", boardPage.hasNext());
+				   
+		   
+		   model.addAttribute("boardPage", boardPage);
+		   model.addAttribute("page", page);
+		   model.addAttribute("linkSize", linkSize);
+		   model.addAttribute("searchType", searchType);
+		   model.addAttribute("searchWord", searchWord);
+		   
+		   return "board/list";
 	   }
 	/**
 	 * 게시글 전체 글 목록, 페이징X
@@ -209,6 +257,7 @@ public class BoardController {
 			   Model model) {
 	   	replyDTO.setMemberId(user.getUsername()); // 리플 작성자 정보 추가
 	   	boardService.replyWrite(replyDTO);
+	   	log.debug("testtest: {}",replyDTO.getBoardNum());
 	   	return "redirect:read?boardNum=" + replyDTO.getBoardNum();
 	   }
 	   
@@ -220,12 +269,12 @@ public class BoardController {
 	    */
 	   @GetMapping("replyDelete")
 	   public String replyDelete(
-			   @RequestParam("replyNum") Integer replyNum
+			   @ModelAttribute ReplyDTO replyDTO
 			   , @AuthenticationPrincipal AuthenticatedUser user
-			   , @RequestParam("boardNum") Integer boardNum) {
+			   ) {
 		   try {
-			   boardService.replydelete(replyNum, user.getId());
-			   return "redirect:read?boardNum=" + boardNum;
+			   boardService.replydelete(replyDTO.getReplyNum(), user.getId());
+			   return "redirect:read?boardNum=" + replyDTO.getBoardNum() ;
 			   } catch (Exception e) { // 문제 발생
 				   e.printStackTrace();
 				   return "redirect:listAll";

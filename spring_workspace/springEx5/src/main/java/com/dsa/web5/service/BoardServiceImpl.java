@@ -6,6 +6,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -19,7 +24,6 @@ import com.dsa.web5.entity.ReplyEntity;
 import com.dsa.web5.repository.BoardRepository;
 import com.dsa.web5.repository.MemberRepository;
 import com.dsa.web5.repository.ReplyRepository;
-import com.dsa.web5.security.AuthenticatedUser;
 import com.dsa.web5.util.FileManager;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -152,7 +156,7 @@ public class BoardServiceImpl implements BoardService {
 			private ReplyDTO convertToReplyDTO(ReplyEntity entity) {
 			return ReplyDTO.builder()
 					.replyNum(entity.getReplyNum())
-					.boardNum(entity.getReplyNum())
+					.boardNum(entity.getBoard().getBoardNum())
 					.memberId(entity.getMember().getMemberId())
 					.memberName(entity.getMember().getMemberName())
 					.contents(entity.getContents())
@@ -321,7 +325,6 @@ public class BoardServiceImpl implements BoardService {
 					.member(member)
 					.contents(replyDTO.getContents())
 					.build();
-			
 			// Jpa 메서드를 통해 DB에 저장하기
 		    replyRepository.save(reply);
 		}
@@ -336,6 +339,69 @@ public class BoardServiceImpl implements BoardService {
 				throw new RuntimeException("삭제권한이 없습니다.");
 			}
 			replyRepository.delete(reply);
+		}
+
+		/**
+		 * (검색 후 지정한 페이지 분량의) 글 목록 조회
+		 * @param page				현재 페이지
+		 * @param pageSize			한 페이지당 글 수
+		 * @param searchType		검색 대상, 기준
+		 * @param searchWord		검색어
+		 * @return 한 페이지의 글 목록	
+		 */
+		@Override
+		public Page<BoardDTO> getList(int page, int pageSize, String searchType, String searchWord) {
+			
+			page--;
+			
+			/*
+			 * Pageable : 페이징과 정렬을 위한 페이지 조회 조건을 정의하는 인터페이스
+			 * 			  에이징 쿼리시 몇 번째 페이지를 조회할 것인지,
+			 * 			  한 페이지에 몇 개의 항목을 포함할 것인지,
+			 * 			  어떤 필드 기준으로 정렬할 것인지를 명시.
+			 * 			  PageRequest.of()를 통해 Pageable 객체를 생성
+			 * PageRequest : Pageable 인터페이스의 일반적인 구현체.
+			 * 				 페이지 번호, 페이지 크기, 정렬 정보를 받아 페이징 처리
+			 */
+			
+			// 페이지 조회 조건(현재 페이지, 페이지당 글 수, 정렬 기준 컬럼 및 정렬 순서
+			Pageable pageable = PageRequest.of(page, pageSize, Sort.by("boardNum").descending());
+			
+			Page<BoardEntity> entityPage = null;
+			
+			switch (searchType) {
+			case "title" :
+				entityPage = boardRepository.findByTitleContaining(searchWord, pageable);
+				break;
+			case "contents" :
+				entityPage = boardRepository.findByContentsContaining(searchWord, pageable);
+				break;
+			case "id" :
+				entityPage = boardRepository.findByMember_MemberId(searchWord, pageable);
+				break;
+			case "all" :
+				entityPage = boardRepository.findByTitleContainingOrContentsContaingOrMemberMemberIdContaining(searchWord, searchWord, searchWord, pageable);
+				break;
+				default : 
+					entityPage = boardRepository.findAll(pageable);
+					break;
+			}
+			
+			List<BoardDTO> boardDTOList = new ArrayList<>();
+			for(BoardEntity entity : entityPage) {
+				// BoardEntity를 BoardDTO로 변환
+				BoardDTO dto = convertDTO(entity);
+				boardDTOList.add(dto);
+			}
+			
+			// PageImpl 클래스는 Page 인터페이스의 구현체
+			// 변환된 boardDTOList와 Pageable, 총 요소 수를 사용하여
+			// 새로운 Page<BoardDTO> 객체를 생성
+			Page<BoardDTO> boardDTOPage = new PageImpl<>(
+					boardDTOList, entityPage.getPageable(),
+					entityPage.getTotalElements());
+					
+			return boardDTOPage;
 		}
 		
 		

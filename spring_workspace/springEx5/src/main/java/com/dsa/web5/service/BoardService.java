@@ -3,6 +3,7 @@ package com.dsa.web5.service;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dsa.web5.dto.BoardDTO;
@@ -31,5 +32,7 @@ public interface BoardService {
 	void replyWrite(ReplyDTO replyDTO);
 
 	void replydelete(Integer replyNum, String string);
+
+	Page<BoardDTO> getList(int page, int pageSize, String searchType, String searchWord);
 
 }

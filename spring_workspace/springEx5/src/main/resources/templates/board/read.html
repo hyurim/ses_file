@@ -98,8 +98,13 @@
         	</form>
         </div>
         <!-- 리플 목록 출력 -->
+
 		<table class="reply">
+		
 		    <tr th:each="reply : ${board.replyList}">
+
+	    	    <td th:text="${reply.replyNum}"></td>
+	    	    <td th:text="${board.boardNum}"></td>
 	    	    <td class="replyid" th:text="${reply.memberId}"></td>
         		<td class="replytext" th:text="${reply.contents}"></td>
         		<td class="replydate" th:text="${#temporals.format(reply.createDate, 'yy.MM.dd HH:mm')}"></td>
