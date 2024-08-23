@@ -34,5 +34,7 @@ public interface BoardService {
 	void replydelete(Integer replyNum, String string);
 
 	Page<BoardDTO> getList(int page, int pageSize, String searchType, String searchWord);
+	
+	
 
 }

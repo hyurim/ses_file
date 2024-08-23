@@ -1,4 +1,4 @@
- package com.dsa.web5.util;
+package com.dsa.web5.util;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -24,6 +24,7 @@ import com.dsa.web5.entity.ReplyEntity;
 import com.dsa.web5.repository.BoardRepository;
 import com.dsa.web5.repository.MemberRepository;
 import com.dsa.web5.repository.ReplyRepository;
+import com.dsa.web5.security.AuthenticatedUser;
 import com.dsa.web5.util.FileManager;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -156,7 +157,7 @@ public class BoardServiceImpl implements BoardService {
 			private ReplyDTO convertToReplyDTO(ReplyEntity entity) {
 			return ReplyDTO.builder()
 					.replyNum(entity.getReplyNum())
-					.boardNum(entity.getBoard().getBoardNum())
+					.boardNum(entity.getReplyNum())
 					.memberId(entity.getMember().getMemberId())
 					.memberName(entity.getMember().getMemberName())
 					.contents(entity.getContents())
@@ -325,6 +326,7 @@ public class BoardServiceImpl implements BoardService {
 					.member(member)
 					.contents(replyDTO.getContents())
 					.build();
+			
 			// Jpa 메서드를 통해 DB에 저장하기
 		    replyRepository.save(reply);
 		}
@@ -377,10 +379,12 @@ public class BoardServiceImpl implements BoardService {
 				entityPage = boardRepository.findByContentsContaining(searchWord, pageable);
 				break;
 			case "id" :
-				entityPage = boardRepository.findByMember_MemberId(searchWord, pageable);
+				entityPage = boardRepository.findByMemberId_MemberId(searchWord, pageable);
 				break;
 			case "all" :
-				entityPage = boardRepository.findByTitleContainingOrContentsContaingOrMemberMemberIdContaining(searchWord, searchWord, searchWord, pageable);
+				entityPage = boardRepository.findByTitleContainingOrContentsContainingOrMemberId_MemberIdContaining(searchWord, searchWord, searchWord, pageable);
+				
+//				entityPage = boardRepository.searchAll(searchWord, pageable);
 				break;
 				default : 
 					entityPage = boardRepository.findAll(pageable);
@@ -404,63 +408,4 @@ public class BoardServiceImpl implements BoardService {
 			return boardDTOPage;
 		}
 		
-		
-		// 존재한다면 entity의 정보를 dto에 옮겨닮기
-		/*BoardDTO boardDto = BoardDTO.builder()
-				.boardNum(board.getBoardNum())
-				.memberId(board.getMemberId().getMemberId())
-				.memberName(board.getMemberId().getMemberName())
-				.title(board.getTitle())
-				.contents(board.getContents())
-				.viewCount(board.getViewCount())
-				.likeCount(board.getLikeCount())
-				.originalName(board.getOriginalName())
-				.fileName(board.getFileName())
-				.createDate(board.getCreateDate())
-				.updateDate(board.getUpdateDate())
-				.build();
-		
-		return boardDto;
-	}
-		*/
-	/*
-	@Override
-	public List<BoardDTO> selectAllData2() {
-		
-		// stream()
-		// 데이터 -> 중간 필터 -> 최종본
-		 
-	    return boardRepository.findAll().stream()
-	        .map(entity -> {
-	            BoardDTO dto = new BoardDTO();
-	            dto.setBoardNum(entity.getBoardNum());
-	            dto.setTitle(entity.getTitle());
-	            // MemberEntity에서 이름을 가져와서 설정
-	            dto.setMemberName(entity.getMemberId().getMemberName());
-	            dto.setViewCount(entity.getViewCount());
-	            dto.setCreateDate(entity.getCreateDate());
-	            return dto;
-	        })
-	        .collect(Collectors.toList());
-	}
-	
-	@Override
-	public List<BoardDTO> selectAllData3() {
-
-		List<BoardEntity> entityList = boardRepository.findAll();
-		List<BoardDTO> dtoList = new ArrayList<>();
-		
-		for(BoardEntity entity : entityList) {
-			BoardDTO dto = new BoardDTO();
-			dto.setBoardNum(entity.getBoardNum());
-			dto.setTitle(entity.getTitle());
-			// MemberEntity에서 이름을 가져와서 설정
-	        dto.setMemberName(entity.getMemberId().getMemberName());
-			dto.setViewCount(entity.getViewCount());
-			dto.setCreateDate(entity.getCreateDate());
-			dtoList.add(dto);
-		}
-		return dtoList;
-	}
-	*/
 }

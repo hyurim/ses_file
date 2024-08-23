@@ -78,7 +78,20 @@ public class BoardController {
 	         return "board/writeForm";
 	      }
 	   }
-	   
+	/**
+	 * 게시글 전체 글 목록, 페이징X
+	 * @param model
+	 * @return listAll.html
+	 */
+	   @GetMapping("listAll")
+	   public String listAll(Model model) {
+		   
+		   List<BoardDTO> board = boardService.selectAllData();
+		   
+		   model.addAttribute("board", board);
+		   
+	   	return "board/listAll";
+	   }
 	   /**
 	    * 게시판 전체 글 목록, 페이징 O
 	    * @param model	
@@ -119,21 +132,6 @@ public class BoardController {
 		   
 		   return "board/list";
 	   }
-	/**
-	 * 게시글 전체 글 목록, 페이징X
-	 * @param model
-	 * @return listAll.html
-	 */
-	   @GetMapping("listAll")
-	   public String listAll(Model model) {
-		   
-		   List<BoardDTO> board = boardService.selectAllData();
-		   
-		   model.addAttribute("board", board);
-		   
-	   	return "board/listAll";
-	   }
-	   
 	   /**
 	    * 게시글 상세보기
 	    * @param Model
@@ -257,7 +255,6 @@ public class BoardController {
 			   Model model) {
 	   	replyDTO.setMemberId(user.getUsername()); // 리플 작성자 정보 추가
 	   	boardService.replyWrite(replyDTO);
-	   	log.debug("testtest: {}",replyDTO.getBoardNum());
 	   	return "redirect:read?boardNum=" + replyDTO.getBoardNum();
 	   }
 	   
@@ -269,12 +266,12 @@ public class BoardController {
 	    */
 	   @GetMapping("replyDelete")
 	   public String replyDelete(
-			   @ModelAttribute ReplyDTO replyDTO
+			   @RequestParam("replyNum") Integer replyNum
 			   , @AuthenticationPrincipal AuthenticatedUser user
-			   ) {
+			   , @RequestParam("boardNum") Integer boardNum) {
 		   try {
-			   boardService.replydelete(replyDTO.getReplyNum(), user.getId());
-			   return "redirect:read?boardNum=" + replyDTO.getBoardNum() ;
+			   boardService.replydelete(replyNum, user.getId());
+			   return "redirect:read?boardNum=" + boardNum;
 			   } catch (Exception e) { // 문제 발생
 				   e.printStackTrace();
 				   return "redirect:listAll";
