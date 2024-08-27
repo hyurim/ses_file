@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<title>Insert title here</title>
+</head>
+<script>
+	$(document).ready(() => {
+		$('#inputId').on('input', function() {
+			let id = $(this).val();
+			$.ajax({
+				url: 'inputId',
+				type: 'post',
+				data: { id: id },
+				success: () => {
+					let str = '<p style="color: blue;">사용 가능한 아이디입니다.</p>';
+					$('#idCheck').html(str);
+				}, error: (e) => {
+					let str = '<p style="color: red;">사용 불가능한 아이디입니다.</p>';
+					$('#idCheck').html(str);
+				}
+			});	
+		});
+	});
+</script>
+<body>
+	<h1>[ID 중복 확인]</h1>
+	
+	<form>
+	id <input type="text" name="id" id = "inputId">
+	<div id="idCheck"></div>
+	<br>
+	PW <input type="text" name="pw">
+	<br>
+	<input type="submit" value="로그인">
+	</form>
+</body>
+</html>

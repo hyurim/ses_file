@@ -50,3 +50,13 @@ create table web5_reply (
                             constraint foreign key (member_id) references web5_member (member_id) on delete set null
 );
 select * from web5_reply;
+
+create table ajax_member (
+id varchar(30) primary key,
+name varchar(30) not null
+);
+
+insert into 
+select * from ajax_member;
+describe ajax_member;
+drop table ajax_member;
