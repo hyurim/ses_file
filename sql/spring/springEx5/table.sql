@@ -56,7 +56,20 @@ id varchar(30) primary key,
 name varchar(30) not null
 );
 
-insert into 
 select * from ajax_member;
 describe ajax_member;
 drop table ajax_member;
+
+create table ajax_comment(
+num int primary key auto_increment,
+name varchar(30) not null,
+comment varchar(1000) not null);
+
+insert into ajax_comment (name, comment) values ("박", "가나다");
+insert into ajax_comment (name, comment) values ("김", "1");
+insert into ajax_comment (name, comment) values ("나", "12");
+insert into ajax_comment (name, comment) values ("이", "123");
+insert into ajax_comment (name, comment) values ("임", "1234");
+
+describe ajax_comment;
+select * from ajax_comment;

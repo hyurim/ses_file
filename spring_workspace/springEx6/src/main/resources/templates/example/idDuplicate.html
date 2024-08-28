@@ -7,33 +7,46 @@
 </head>
 <script>
 	$(document).ready(() => {
-		$('#inputId').on('input', function() {
+		$('#memberId').keyup( function() {
 			let id = $(this).val();
+			if (id.length < 3 || id.length > 10) {
+				$('#msg').css('color', 'red');
+				$('#msg').html('ID는 3~10자로 입력하세요.');
+				$('#submistButton').attr('disabled', true);
+				}
+			});
+			
 			$.ajax({
-				url: 'inputId',
+				url: 'idDuplicate',
 				type: 'post',
 				data: { id: id },
-				success: () => {
-					let str = '<p style="color: blue;">사용 가능한 아이디입니다.</p>';
-					$('#idCheck').html(str);
+				success: (result) => {
+					if (result) {
+						$('#msg').css('color', 'red');
+						$('#msg').html('이미 사용중인 ID 입니다.');
+						$('#submistButton').attr('disabled', true);
+					} else
+						{
+							$('#msg').css('color', 'blud');
+							$('#msg').html('사용 가능한 ID 입니다.');
+							$('#submistButton').attr('disabled', false);
+						}
 				}, error: (e) => {
-					let str = '<p style="color: red;">사용 불가능한 아이디입니다.</p>';
-					$('#idCheck').html(str);
+					alert('error', e);
 				}
 			});	
 		});
-	});
 </script>
 <body>
 	<h1>[ID 중복 확인]</h1>
 	
-	<form>
-	id <input type="text" name="id" id = "inputId">
-	<div id="idCheck"></div>
+	<form action="#" method="post">
+	id <input type="text" id = "memberId">
+	<span id="msg"></span>
 	<br>
-	PW <input type="text" name="pw">
+	이름 <input type="text" name="name">
 	<br>
-	<input type="submit" value="로그인">
+	<button type="submit" id="submitButton" disabled="disabled" >가입</button>
 	</form>
 </body>
 </html>

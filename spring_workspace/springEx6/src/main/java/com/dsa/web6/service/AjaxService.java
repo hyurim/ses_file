@@ -15,6 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 public class AjaxService {
 	@Autowired
 	MemberRepository memberRepository;
+
+	public boolean idDuplicate(String id) {
+		return memberRepository.existsById(id);
+	}
 }
 
 
