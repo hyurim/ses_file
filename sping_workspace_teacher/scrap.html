@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>게시글</title>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h1>게시글 목록</h1>
+    
+    <!-- 게시글이 반복해서 출력되는 부분 -->
+    <div>
+        <h2>게시글 제목</h2>
+        <button class="scrapButton" data-user-id="user1" data-post-id="1">스크랩</button>
+        <button class="unscrapButton" data-user-id="user1" data-post-id="1">스크랩 취소</button>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.scrapButton').click(function() {
+                let userId = $(this).data('user-id');
+                let postId = $(this).data('post-id');
+
+                $.post("/scrap/add", { userId: userId, postId: postId }, function(response) {
+                    alert(response);
+                });
+            });
+
+            $('.unscrapButton').click(function() {
+                let userId = $(this).data('user-id');
+                let postId = $(this).data('post-id');
+
+                $.post("/scrap/remove", { userId: userId, postId: postId }, function(response) {
+                    alert(response);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

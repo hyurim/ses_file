@@ -13,12 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeController {
 
 	@GetMapping({"", "/"})
-	public String Home() {
+	public String home() {
 		return "home";
 	}
 	
 	@GetMapping("thymeleaf")
-	public String thymeleaf(@AuthenticationPrincipal AuthenticatedUser user) {
+	public String thymeleaf(
+			@AuthenticationPrincipal AuthenticatedUser user) {
 		if(user != null) {
 			log.debug("Authentication 객체 정보 출력");
 			log.debug(user.getUsername());
@@ -32,4 +33,7 @@ public class HomeController {
 		
 		return "thymeleaf";
 	}
+	
+	
+	
 }

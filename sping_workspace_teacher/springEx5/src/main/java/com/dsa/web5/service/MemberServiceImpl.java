@@ -1,0 +1,127 @@
+package com.dsa.web5.service;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.dsa.web5.dto.MemberDTO;
+import com.dsa.web5.entity.MemberEntity;
+import com.dsa.web5.repository.MemberRepository;
+
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@Slf4j
+@Transactional
+@RequiredArgsConstructor
+public class MemberServiceImpl implements MemberService {
+
+	private final MemberRepository mr;
+
+	// 암호화
+	private final BCryptPasswordEncoder passwordEncoder;
+	
+	/**
+	 * 가입시 아이디 중복 확인 처리
+	 * @param searchId
+	 * @return 해당 아이디로 가입 가능 여부 true / false
+	 */
+	@Override
+	public boolean idCheck(String searchId) {
+		return !mr.existsById(searchId);
+	}
+
+	/**
+	 * 회원가입 처리
+	 * @param MemberDTO 가입 데이터
+	 */
+	@Override
+	public void join(MemberDTO member) {
+		MemberEntity entity = MemberEntity.builder()
+				.memberId(member.getMemberId())
+				.memberPassword(
+					passwordEncoder.encode(member.getMemberPassword())
+				)
+				.memberName(member.getMemberName())
+				.email(member.getEmail())
+				.phone(member.getPhone())
+				.address(member.getAddress())
+//				.enabled(true)
+//				.rolename("ROLE_USER")
+				.build();
+		mr.save(entity);
+	}
+
+	@Override
+	public MemberDTO getMember(String username) {
+		
+		MemberEntity entity = mr.findById(username)
+				.orElseThrow(() -> new EntityNotFoundException(
+					username + " : 아이디가 없습니다."));
+		
+		MemberDTO dto = MemberDTO.builder()
+						.memberId(entity.getMemberId())
+						.memberPassword(entity.getMemberPassword())
+						.memberName(entity.getMemberName())
+						.email(entity.getEmail())
+						.phone(entity.getPhone())
+						.address(entity.getAddress())
+						.enabled(entity.getEnabled())
+						.rolename(entity.getRolename())
+						.build();
+		return dto;
+	}
+
+	/**
+	 * 개인정보 수정
+	 * @param MemberDTO
+	 */
+	@Override
+	public void update(MemberDTO memberDTO) {
+		MemberEntity entity = mr.findById(memberDTO.getMemberId())
+				.orElseThrow(() -> new EntityNotFoundException(
+						memberDTO.getMemberId() + " : 아이디가 없습니다."));
+		
+		if (!memberDTO.getMemberPassword().isEmpty()) {
+			entity.setMemberPassword(
+				passwordEncoder.encode(memberDTO.getMemberPassword())
+			);
+		}
+		
+		entity.setMemberName(memberDTO.getMemberName());
+		entity.setEmail(memberDTO.getEmail());
+		entity.setPhone(memberDTO.getPhone());
+		entity.setAddress(memberDTO.getAddress());
+		mr.save(entity);
+	}
+	
+	/*    // 회원 탈퇴 처리 메서드 추가
+    @Override
+    public void deleteMember(String username) {
+        MemberEntity entity = mr.findById(username)
+            .orElseThrow(() -> new EntityNotFoundException(
+                username + " : 아이디가 없습니다."));
+        
+        mr.delete(entity); // 회원 삭제
+        log.info("회원 {}가 성공적으로 삭제되었습니다.", username);
+    }
+	 */
+	
+	/*
+	 * 
+	 // 새로운 메서드 추가: 이메일을 기반으로 아이디 찾기
+    @Override
+    public String findIdByEmail(String email) {
+        MemberEntity entity = mr.findByEmail(email);
+        if (entity != null) {
+            return entity.getMemberId();
+        } else {
+            return null;
+        }
+    }
+	 * 
+	 */
+	
+}

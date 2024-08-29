@@ -44,6 +44,12 @@ public class BoardServiceImpl implements BoardService {
 	private final ReplyRepository replyRepository;
 	private final FileManager fileManager;
 	
+	
+	/**
+	 * @param
+	 * @param
+	 * @param
+	 */
 	@Override
 	public void write(BoardDTO boardDTO, String uploadPath, MultipartFile upload) throws IOException {
 	    // 아이디로 회원 엔터티 조회, 없으면 예외 발생
